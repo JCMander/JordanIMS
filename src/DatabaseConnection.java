@@ -3,6 +3,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
+
+/** Class used to CRUD database
+ * 
+ * 
+ **/
 
 public class DatabaseConnection {
        
@@ -10,6 +16,9 @@ public class DatabaseConnection {
        static final String DB_URL = "jdbc:mysql://localhost/mydb";
        static final String USER = "JM";
        static final String PASS = "root";
+       private Random rnd = new Random();
+       
+       private String[] gnomeArray = {"Hippy", "King", "Queen", "Nuclear", "Biohazard", "Obama", "Redneck", "Business", "Chav", "Beiber", "Potter", "Wolverine", "Iron Man", "Voldemort", "Jedi", "Sith", "Picard", "Angel", "Gun", "Big Gun",  "Bazooka", "Tank", "Police", "French", "Australian", "Insane", "Demon", "Samurai", "Time Lord", "Chewbacca", "Roman", "Greek", "Other"};
        
        private Statement stmt;
        private Connection conn;
@@ -32,11 +41,11 @@ public class DatabaseConnection {
        }
 
        public void createEntry(){
-    	   for(int i=1;i<10;i++){
+    	   for(int i=0;i<33;i++){
               System.out.println("Inserting records into table");
               try {
                      stmt = conn.createStatement();
-                     String sql = "INSERT INTO Product VALUES (" + i + ", 'Gnome" + i +"', "+(i*23/2*3)+")";
+                     String sql = "INSERT INTO Product VALUES (" + (i+1) + ", '" + gnomeArray[i] + " Gnome', "+rnd.nextInt(250)+")";
                      stmt.executeUpdate(sql);
                      System.out.println("Inserted into tables");
               } catch (SQLException e) {

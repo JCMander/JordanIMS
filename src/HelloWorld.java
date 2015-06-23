@@ -8,7 +8,7 @@ public class HelloWorld {
 			System.out.println("Hello World");
 			db = new DatabaseConnection();
 			db.accessDB();
-			//db.createEntry();
+			db.createEntry();
 			//db.readDB();
 			//db.updateDB();
 			//db.deleteRow();
