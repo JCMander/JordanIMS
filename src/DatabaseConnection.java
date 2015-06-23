@@ -89,7 +89,22 @@ public class DatabaseConnection {
     	   }
        }
        
-}
+       public void closeDB(){
+       try{
+    	   if (stmt !=null)
+    		   conn.close();
+       } catch (SQLException se){}
+    	   try{
+    		   if (conn !=null)
+    			   conn.close();
+    	   }catch (SQLException se){
+    		   se.printStackTrace();
+    	   }
+    	   System.out.println("Goodbye!");
+       }
+       
+       
+       }
        
        
        

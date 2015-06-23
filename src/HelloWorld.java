@@ -11,8 +11,9 @@ public class HelloWorld {
 			//db.createEntry();
 			//db.readDB();
 			//db.updateDB();
-			db.deleteRow();
+			//db.deleteRow();
 			db.readDB();
+			db.closeDB();
 	}
 
 }
