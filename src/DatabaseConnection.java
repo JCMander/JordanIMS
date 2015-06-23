@@ -5,10 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Random;
 
-/** Class used to CRUD database
- * 
- * 
- **/
+/** Class used to access, CRUD and close the database **/
+
 
 public class DatabaseConnection {
        
@@ -27,7 +25,7 @@ public class DatabaseConnection {
 
        }
        
-       public void accessDB(){
+       public void accessDB(){ // Establish the connection to the database
               conn = null;
               stmt = null;
               
@@ -40,7 +38,7 @@ public class DatabaseConnection {
               }
        }
 
-       public void createEntry(){
+       public void createEntry(){ // Add a row to the database
     	   for(int i=0;i<33;i++){
               System.out.println("Inserting records into table");
               try {
@@ -55,7 +53,7 @@ public class DatabaseConnection {
     	   }
        }
        
-       public void readDB(){
+       public void readDB(){ // Read the database row by row
     	   System.out.println("Creating statement...");
     	   try {
     		   stmt = conn.createStatement();
@@ -74,7 +72,7 @@ public class DatabaseConnection {
     	   }
        }
        
-       public void updateDB(){
+       public void updateDB(){ // Update an entry in a particular row in the database
     	   System.out.println("Creating statement...");
     	   try {
     	   stmt = conn.createStatement();
@@ -86,7 +84,7 @@ public class DatabaseConnection {
     	   }
        }
        
-       public void deleteRow(){
+       public void deleteRow(){ // Delete a row in the database
     	   System.out.println("Creating statement...");
     	   try {
     	   stmt = conn.createStatement();
@@ -98,7 +96,7 @@ public class DatabaseConnection {
     	   }
        }
        
-       public void closeDB(){
+       public void closeDB(){ // Close the connection to the database
        try{
     	   if (stmt !=null)
     		   conn.close();
