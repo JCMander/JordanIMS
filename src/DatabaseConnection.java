@@ -3,6 +3,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Random;
 
 /** Class used to access, CRUD and close the database **/
@@ -22,8 +23,26 @@ public class DatabaseConnection {
        private Statement stmt;
        private Connection conn;
        
+       private ArrayList<Integer> productID;
+       private ArrayList<String> productName;
+       private ArrayList<Integer> productQuantity;
+       
        public DatabaseConnection(){
-
+    	   
+    	   productID = new ArrayList<Integer>();
+    	   productName = new ArrayList<String>();
+    	   productQuantity = new ArrayList<Integer>();
+    	   
+       }
+   
+       public ArrayList<Integer> getProductID(){
+    	   return productID;
+       }
+       public ArrayList<String> getProductName(){
+    	   return productName;
+       }
+       public ArrayList<Integer> getProductQuantity(){
+    	   return productQuantity;
        }
        
        public void accessDB(){ // Establish the connection to the database
@@ -55,7 +74,7 @@ public class DatabaseConnection {
        }
        
        public void readDB(){ // Read the database row by row
-    	   int dbcounter = 0 ;
+    	   //int dbcounter = 0 ;
     	   System.out.println("Creating statement...");
     	   try {
     		   stmt = conn.createStatement();
@@ -65,14 +84,14 @@ public class DatabaseConnection {
     			   //int id = rs.getInt("ProductID");
     			   //String name = rs.getString("ProductName");
     			   //int quantity = rs.getInt("ProductQuantity");
-    			   ProductArray[dbcounter][0] = Integer.toString(rs.getInt("ProductID"));
-    			   ProductArray[dbcounter][1] = rs.getString("ProductName");
-    			   ProductArray[dbcounter][2] = Integer.toString(rs.getInt("ProductQuantity"));
+    			   productID.add(rs.getInt("ProductID"));
+    			   productName.add(rs.getString("ProductName"));
+    			   productQuantity.add(rs.getInt("ProductQuantity"));
     			   //System.out.println("ID: " + id + ", name: " + name + ", quantity: " + quantity + ", dbcounter: " + dbcounter);
-    			   System.out.println(ProductArray[dbcounter][0] + " " + ProductArray[dbcounter][1] + " " + ProductArray[dbcounter][2] + " ");
-    			   dbcounter++;
+    			   //System.out.println(ProductArray[dbcounter][0] + " " + ProductArray[dbcounter][1] + " " + ProductArray[dbcounter][2] + " ");
+    			   //dbcounter++;
     		   }
-    		   dbcounter=0;
+    		   //dbcounter=0;
     		   rs.close();
     	   }catch (SQLException e){
     		// TODO Auto-generated catch block
