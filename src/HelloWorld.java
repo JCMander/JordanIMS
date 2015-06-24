@@ -14,8 +14,8 @@ public class HelloWorld {
 			//db.deleteRow();
 			db.readDB();
 			db.closeDB();
-			SwingAppGUI sD = new SwingAppGUI();
-			sD.showEvent();
+			//SwingAppGUI sD = new SwingAppGUI();
+			//sD.showEvent();
 	}
 
 }

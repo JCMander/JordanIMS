@@ -16,6 +16,7 @@ public class DatabaseConnection {
        static final String PASS = "root";
        private Random rnd = new Random();
        
+       String[][] ProductArray = new String [33][3];
        private String[] gnomeArray = {"Hippy", "King", "Queen", "Nuclear", "Biohazard", "Obama", "Redneck", "Business", "Chav", "Beiber", "Potter", "Wolverine", "Iron Man", "Voldemort", "Jedi", "Sith", "Picard", "Angel", "Gun", "Big Gun",  "Bazooka", "Tank", "Police", "French", "Australian", "Insane", "Demon", "Samurai", "Time Lord", "Chewbacca", "Roman", "Greek", "Other"};
        
        private Statement stmt;
@@ -54,17 +55,24 @@ public class DatabaseConnection {
        }
        
        public void readDB(){ // Read the database row by row
+    	   int dbcounter = 0 ;
     	   System.out.println("Creating statement...");
     	   try {
     		   stmt = conn.createStatement();
     		   String sql2 = "SELECT ProductID, ProductName, ProductQuantity FROM Product";
     		   ResultSet rs = stmt.executeQuery(sql2);
     		   while (rs.next()){
-    			   int id = rs.getInt("ProductID");
-    			   String name = rs.getString("ProductName");
-    			   int quantity = rs.getInt("ProductQuantity");
-    			   System.out.println("ID: " + id + ", name: " + name + ", quantity: " + quantity);
+    			   //int id = rs.getInt("ProductID");
+    			   //String name = rs.getString("ProductName");
+    			   //int quantity = rs.getInt("ProductQuantity");
+    			   ProductArray[dbcounter][0] = Integer.toString(rs.getInt("ProductID"));
+    			   ProductArray[dbcounter][1] = rs.getString("ProductName");
+    			   ProductArray[dbcounter][2] = Integer.toString(rs.getInt("ProductQuantity"));
+    			   //System.out.println("ID: " + id + ", name: " + name + ", quantity: " + quantity + ", dbcounter: " + dbcounter);
+    			   System.out.println(ProductArray[dbcounter][0] + " " + ProductArray[dbcounter][1] + " " + ProductArray[dbcounter][2] + " ");
+    			   dbcounter++;
     		   }
+    		   dbcounter=0;
     		   rs.close();
     	   }catch (SQLException e){
     		// TODO Auto-generated catch block
