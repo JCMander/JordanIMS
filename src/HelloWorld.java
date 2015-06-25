@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
+import javax.swing.JTable;
+
 
 public class HelloWorld {
 
@@ -40,7 +42,7 @@ public class HelloWorld {
 			db.readDB();
 			//db.closeDB();
 			SwingAppGUI sD = new SwingAppGUI();
-			sD.showEvent();
+			//sD.showEvent();
 			
 			
 			productID = db.getProductID();
@@ -123,6 +125,7 @@ public class HelloWorld {
 			}
 			
 			/** File saving code ends here **/
+
 			
 	}
 

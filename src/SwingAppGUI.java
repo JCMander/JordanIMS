@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,8 +13,41 @@ public class SwingAppGUI extends JFrame {
 	private JLabel headerLabel;
 	private JLabel statusLabel;
 	private JPanel controlPanel;
-	public SwingAppGUI(){prepareGUI();}
+	private Object[] columnNames = {"Product ID", "Product Name", "Product Quantity"};
+	private DefaultTableModel tableModel;
+    private Object[][] data = {{0, "Hi", 30}, {1, "Hello", 30}, {2, "Yo", 30}, {3, "Bruh", 30}};
+	JTable GUItable;
+	JPanel GUIPanel;
+	
+	public SwingAppGUI(){
+		
+		tableModel = new DefaultTableModel(columnNames, 0){
+			public boolean isCellEditable(int row, int column){
+				return false;
+			}
+		};
+		
+		/*        
+       public void addProductToTable(String productID, String productName, int productQuantity){
+              
+              DefaultTableModel model = (DefaultTableModel) stockListTable.getModel();
+              model.addRow(new Object[]{productID, productName, productQuantity});
+              
+       }
+       
+ */
+		
+		GUItable = new JTable(tableModel);
+		GUIPanel = new JPanel();
+		GUIPanel.add(new JScrollPane(GUItable));
+		this.add(GUIPanel);
+		
+		this.pack();
+		this.setVisible(true);
+		//prepareGUI();
+		}
 
+    
 	private void prepareGUI() {
 		mainFrame = new JFrame("Java SWING Examples");
 		mainFrame.setSize(400, 400);
