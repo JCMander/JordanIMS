@@ -6,7 +6,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Random;
 
-/** Class used to access, CRUD and close the database **/
+/** Class used to access, CRUD and close the database
+ * Also used to convert the database into a number of ArrayLists **/
 
 
 public class DatabaseConnection {
@@ -99,11 +100,11 @@ public class DatabaseConnection {
     	   }
        }
        
-       public void updateDB(){ // Update an entry in a particular row in the database
+       public void updateDB(int sql4, int sql5){ // Update an entry in a particular row in the database
     	   System.out.println("Creating statement...");
     	   try {
     	   stmt = conn.createStatement();
-    	   String sql3 = "UPDATE Product SET ProductQuantity = 23 WHERE ProductID < 7";
+    	   String sql3 = "UPDATE Product SET ProductQuantity = " + sql5 + " WHERE ProductID = " + sql4 + "";
     	   stmt.executeUpdate(sql3);
     	   }catch (SQLException e){
     		// TODO Auto-generated catch block
@@ -115,8 +116,8 @@ public class DatabaseConnection {
     	   System.out.println("Creating statement...");
     	   try {
     	   stmt = conn.createStatement();
-    	   String sql4 = "DELETE FROM Product WHERE ProductID = 9" ;
-    	   stmt.executeUpdate(sql4);
+    	   String sql6 = "DELETE FROM Product WHERE ProductID = 9" ;
+    	   stmt.executeUpdate(sql6);
     	   }catch (SQLException e){
     		// TODO Auto-generated catch block
                e.printStackTrace();

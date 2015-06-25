@@ -23,7 +23,7 @@ public class HelloWorld {
 			//db.updateDB();
 			//db.deleteRow();
 			db.readDB();
-			db.closeDB();
+			//db.closeDB();
 			//SwingAppGUI sD = new SwingAppGUI();
 			//sD.showEvent();
 			
@@ -54,8 +54,11 @@ public class HelloWorld {
 
 			System.out.println("Enter a quantity");
 			usertest2 = usermsg1.nextInt();
+			db.updateDB(usertest1, usertest2);
+			db.readDB();
 			System.out.println("You entered " + usertest2);
-			
+			System.out.println(productID.get(usertest1-1) + ", " + productName.get(usertest1-1) + ", " + productQuantity.get(usertest1-1) + ".");
+			db.closeDB();
 			
 			
 	}
