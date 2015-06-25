@@ -35,14 +35,11 @@ public class HelloWorld {
 				System.out.println(productID.get(i) + ", " + productName.get(i) + ", " + productQuantity.get(i) + ".");
 			}
 			
-			Scanner usermsg1 = new Scanner(System.in);
+			/**Update quantity code starts here**/
 			
+			Scanner usermsg1 = new Scanner(System.in);
 			System.out.println("Enter a product ID");
 			usertest1 = usermsg1.nextInt();
-			//do{
-			//	int i =0;
-			//	++i;
-			//}while(usertest1!=productID.get(i));
 			for(int i = 0; i < productID.size(); i++){
 				if(usertest1==productID.get(i)){
 					System.out.println(productID.get(i) + ", " + productName.get(i) + ", " + productQuantity.get(i) + ".");
@@ -62,6 +59,7 @@ public class HelloWorld {
 			}
 			db.closeDB();
 			
+			/**Update quantity code ends here**/
 			
 	}
 
