@@ -31,7 +31,7 @@ public class HelloWorld {
 			productName = db.getProductName();
 			productQuantity = db.getProductQuantity();
 			
-			for(int i = 0; i < productID.size() - 1; i++){
+			for(int i = 0; i < productID.size(); i++){
 				System.out.println(productID.get(i) + ", " + productName.get(i) + ", " + productQuantity.get(i) + ".");
 			}
 			
@@ -43,7 +43,7 @@ public class HelloWorld {
 			//	int i =0;
 			//	++i;
 			//}while(usertest1!=productID.get(i));
-			for(int i = 0; i < productID.size() - 1; i++){
+			for(int i = 0; i < productID.size(); i++){
 				if(usertest1==productID.get(i)){
 					System.out.println(productID.get(i) + ", " + productName.get(i) + ", " + productQuantity.get(i) + ".");
 					i=productID.size()-1;
@@ -57,7 +57,9 @@ public class HelloWorld {
 			db.updateDB(usertest1, usertest2);
 			db.readDB();
 			System.out.println("You entered " + usertest2);
-			System.out.println(productID.get(usertest1-1) + ", " + productName.get(usertest1-1) + ", " + productQuantity.get(usertest1-1) + ".");
+			for(int i=0; i<productID.size(); i++){
+				System.out.println(productID.get(i) + ", " + productName.get(i) + ", " + productQuantity.get(i) + ".");
+			}
 			db.closeDB();
 			
 			
