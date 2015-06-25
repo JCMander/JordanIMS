@@ -18,7 +18,6 @@ public class DatabaseConnection {
        static final String PASS = "root";
        private Random rnd = new Random();
        
-       String[][] ProductArray = new String [33][3];
        private String[] gnomeArray = {"Hippy", "King", "Queen", "Nuclear", "Biohazard", "Obama", "Redneck", "Business", "Chav", "Beiber", "Potter", "Wolverine", "Iron Man", "Voldemort", "Jedi", "Sith", "Picard", "Angel", "Gun", "Big Gun",  "Bazooka", "Tank", "Police", "French", "Australian", "Insane", "Demon", "Samurai", "Time Lord", "Chewbacca", "Roman", "Greek", "Other"};
        
        private Statement stmt;
