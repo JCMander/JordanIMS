@@ -39,8 +39,8 @@ public class HelloWorld {
 			//db.deleteRow();
 			db.readDB();
 			//db.closeDB();
-			//SwingAppGUI sD = new SwingAppGUI();
-			//sD.showEvent();
+			SwingAppGUI sD = new SwingAppGUI();
+			sD.showEvent();
 			
 			
 			productID = db.getProductID();
@@ -51,8 +51,18 @@ public class HelloWorld {
 				System.out.println(productID.get(i) + ", " + productName.get(i) + ", " + productQuantity.get(i) + ".");
 			}*/
 			
-			/**Update quantity code starts here**/
+			/** Message to show when quantity is low code starts here**/
 			
+			for (int i=0; i<productID.size();i++){
+				if(productQuantity.get(i)<50){
+					System.out.println("The quantity for (" + productID.get(i) + ")" + productName.get(i) + " is low (" + productQuantity.get(i) + ") , this product needs to be reordered.");
+				}
+			}
+			
+			/** Message to show when quantity is low code ends here **/
+			
+			/**Update quantity code starts here**/
+			/*
 			Scanner usermsg1 = new Scanner(System.in);
 			System.out.println("Enter a product ID");
 			usertest1 = usermsg1.nextInt();
@@ -75,15 +85,32 @@ public class HelloWorld {
 				System.out.println(productID.get(i) + ", " + productName.get(i) + ", " + productQuantity.get(i) + ".");
 			}
 			db.closeDB();
-			
+			*/
 			/**Update quantity code ends here**/
 			
 			/** File saving code begins here **/
 			//System.out.println(report);
-				report += date + "\r\n";
+				report += "\t\t\t" + date + "\r\n";
+				report += "\r\nProduct ID\tProduct Name\tProduct Quantity\tReorder? (y/n) \r\n";
 			for(int i=0; i<productID.size();i++){
-				report += productID.get(i) + ", " + productName.get(i) + ", " + productQuantity.get(i) + "\r\n";
-				//System.out.println(productID.size());
+				
+				if((productName.get(i)).length()>15){
+					if(productQuantity.get(i)>50){
+						report += productID.get(i) + "\t\t" + productName.get(i) + "\t" + productQuantity.get(i) + "\t\t\t n \r\n";
+						//System.out.println(productID.size());
+						}else{
+							report += productID.get(i) + "\t\t" + productName.get(i) + "\t" + productQuantity.get(i) + "\t\t\t y \r\n";
+							}
+				}else{
+					if(productQuantity.get(i)>50){
+						report += productID.get(i) + "\t\t" + productName.get(i) + "\t\t" + productQuantity.get(i) + "\t\t\t n \r\n";
+						//System.out.println(productID.size());
+						}else{
+							report += productID.get(i) + "\t\t" + productName.get(i) + "\t\t" + productQuantity.get(i) + "\t\t\t y \r\n";
+							}
+				}
+				
+				
 			}
 			//System.out.println(report);
 			try {
