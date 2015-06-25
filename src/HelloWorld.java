@@ -10,7 +10,6 @@ public class HelloWorld {
     private static ArrayList<Integer> productQuantity;
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
 			int usertest1;
 			int usertest2;
