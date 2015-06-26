@@ -53,6 +53,12 @@ public class HelloWorld {
 				System.out.println(productID.get(i) + ", " + productName.get(i) + ", " + productQuantity.get(i) + ".");
 			}*/
 			
+			/** Make the table code starts here **/
+			for(int i=0; i<productID.size(); i++){
+				sD.addProductToTable(productID.get(i), productName.get(i), productQuantity.get(i));
+			}
+			/** Make the table code ends here **/
+			
 			/** Message to show when quantity is low code starts here**/
 			
 			for (int i=0; i<productID.size();i++){
