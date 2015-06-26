@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Random;
 import java.util.Scanner;
 
 import javax.swing.JTable;
@@ -20,11 +21,10 @@ public class HelloWorld {
     private static ArrayList<Integer> productQuantity;
     private static String report = "";
     private static File reportFile = new File ("reportfile.txt");
-    
-     
-	
+    private static Random rnd;
 	public static void main(String[] args) {
 		
+		rnd = new Random();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");    
 		Date date = new Date();
 		System.out.println(dateFormat.format(date));
@@ -53,7 +53,8 @@ public class HelloWorld {
 				System.out.println(productID.get(i) + ", " + productName.get(i) + ", " + productQuantity.get(i) + ".");
 			}*/
 			
-			/** Make the table code starts here **/
+			
+			 /** Make the table code starts here **/
 			for(int i=0; i<productID.size(); i++){
 				sD.addProductToTable(productID.get(i), productName.get(i), productQuantity.get(i));
 			}
@@ -96,6 +97,17 @@ public class HelloWorld {
 			*/
 			/**Update quantity code ends here**/
 			
+			/** Simulation code starts here **/
+			/*
+			for(int i =0; i<5; i++){
+				for(int j=0; j<productID.size();j++){
+					db.updateDB(rnd.nextInt(50),rnd.nextInt(50));
+					System.out.println(productID.get(i) + ", " + productName.get(i) + ", " + productQuantity.get(i) + ".");
+				}
+			}
+			*/
+			/** Simulation code ends here **/
+			
 			/** File saving code begins here **/
 			//System.out.println(report);
 				report += "\t\t\t" + date + "\r\n";
@@ -131,7 +143,6 @@ public class HelloWorld {
 			}
 			
 			/** File saving code ends here **/
-
 			
 	}
 

@@ -59,7 +59,7 @@ public class DatabaseConnection {
        }
 
        public void createEntry(){ // Add a row to the database
-    	   for(int i=0;i<33;i++){
+    	   for(int i=33;i<66;i++){
               System.out.println("Inserting records into table");
               try {
                      stmt = conn.createStatement();

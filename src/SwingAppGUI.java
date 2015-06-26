@@ -16,7 +16,7 @@ public class SwingAppGUI extends JFrame {
 	JPanel GUIPanel;
 		
 	public SwingAppGUI(){ // Creates the table and places the headers in their respective places
-			
+
 		tableModel = new DefaultTableModel(columnNames, 0){
 			public boolean isCellEditable(int row, int column){
 				return false;
@@ -32,8 +32,9 @@ public class SwingAppGUI extends JFrame {
 		this.setTitle("Product List");
 		this.setSize(500, 500);
 		this.setJMenuBar(new MenuBarGUI());
+		this.setLocation(600, 200);
 		}
-		
+
 	public void addProductToTable(int productID, String productName, int productQuantity){ // Method to add the products into the table
         
         DefaultTableModel model = (DefaultTableModel) GUItable.getModel();
@@ -46,7 +47,7 @@ public class SwingAppGUI extends JFrame {
 		private JMenu file;
 		private JMenuItem update;
 		
-		public MenuBarGUI(){
+		public MenuBarGUI(){ // Creates the menu bar and fills it
 			file = new JMenu("File");
 			update = new JMenuItem("Update Quantity");
 			file.add(update);
@@ -54,5 +55,5 @@ public class SwingAppGUI extends JFrame {
 		}
 		
 	}
-
+	
 }
