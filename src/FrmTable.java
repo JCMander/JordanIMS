@@ -28,6 +28,7 @@ public class FrmTable extends JFrame{
     private int count = 0;
     private int updateTableID;
     private int updateTableQuantity;
+    private String newProductName;
 
     private FrmTable() {
         createGUI();
@@ -66,7 +67,9 @@ public class FrmTable extends JFrame{
         addProduct.addActionListener(new ActionListener(){
         	@Override
         	public void actionPerformed(ActionEvent e){
-        		
+        		newProductName = (String)JOptionPane.showInputDialog("Please enter the name of the new product");
+        		count = tableModel.getRowCount()+1;
+                tableModel.addRow(new Object[]{count,newProductName,0});
         	}
         });
         filemenu.add(updateQuantity);
@@ -115,8 +118,10 @@ public class FrmTable extends JFrame{
         JLabel lblField1 = new JLabel("Column1   ");
         JLabel lblField2 = new JLabel("Column2   ");
         JLabel lblField3 = new JLabel("Column3   ");
-        northPanel.add(lblField1);
-        northPanel.add(txtField1);
+        for(int i=0; i<gnomearray.length; i++){
+        	eastPanel.add(lblField1);
+            eastPanel.add(txtField1);
+        }
         northPanel.add(lblField2);
         northPanel.add(txtField2);
         northPanel.add(lblField3);
@@ -129,8 +134,6 @@ public class FrmTable extends JFrame{
         add(pane,BorderLayout.CENTER);
         add(menubar, BorderLayout.NORTH);
         tableModel = new DefaultTableModel(new Object[]{"Product ID","Product Name","Product Quantity"},0);
-        
-        
         for(int i=0; i<gnomearray.length; i++){
         	tableModel.addRow(new Object[]{i+1,gnomearray[i], gnomequantity[i]});
         }
