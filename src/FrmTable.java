@@ -1,7 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -11,24 +10,23 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 public class FrmTable extends JFrame{
     private JTable table;
-    private JButton btnAdd;
-    private JButton btnUpdate;
     private DefaultTableModel tableModel;
-    private JTextField txtField1;
-    private JTextField txtField2;
-    private JTextField txtField3;
     private String[] gnomearray = {"Gnome1","Gnome2","Gnome3"};
     private int[] gnomequantity = {23,42,234};
     private int count = 0;
     private int updateTableID;
     private int updateTableQuantity;
     private String newProductName;
+    private static PurchaseOrder po;
+    private JLabel simTime;
+    private static String stockListMessage ="";
 
     private FrmTable() {
         createGUI();
@@ -39,6 +37,8 @@ public class FrmTable extends JFrame{
         JScrollPane pane = new JScrollPane();
         table = new JTable();
         pane.setViewportView(table);
+        simTime = new JLabel("23:46:00 28/06/2015");
+        JPanel southPanel = new JPanel();
         JMenuBar menubar = new JMenuBar();
         JMenu filemenu = new JMenu("Product");
         JMenu anothermenu = new JMenu("Simulate");
@@ -101,55 +101,49 @@ public class FrmTable extends JFrame{
         makeOrder.addActionListener(new ActionListener(){
         	@Override
         	public void actionPerformed(ActionEvent e){
-        		
+        		po.pack();
+                po.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                po.setLocationRelativeTo(null);
+                po.setVisible(true); 
         	}
         });
         saveemenu.add(saveReport);
         saveemenu.add(makeOrder);
-        JPanel eastPanel = new JPanel();
-        btnAdd = new JButton("Add");
-        eastPanel.add(btnAdd);
-        btnUpdate = new JButton("Update");
-        eastPanel.add(btnUpdate);
-        JPanel northPanel = new JPanel();
-        txtField1 = new JTextField();
-        txtField2 = new JTextField();
-        txtField3 = new JTextField();
-        JLabel lblField1 = new JLabel("Column1   ");
-        JLabel lblField2 = new JLabel("Column2   ");
-        JLabel lblField3 = new JLabel("Column3   ");
-        for(int i=0; i<gnomearray.length; i++){
-        	eastPanel.add(lblField1);
-            eastPanel.add(txtField1);
-        }
-        northPanel.add(lblField2);
-        northPanel.add(txtField2);
-        northPanel.add(lblField3);
-        northPanel.add(txtField3);
-        txtField1.setPreferredSize(lblField1.getPreferredSize());
-        txtField2.setPreferredSize(lblField2.getPreferredSize());
-        txtField3.setPreferredSize(lblField3.getPreferredSize());
-        //add(northPanel, BorderLayout.NORTH);
-        add(eastPanel, BorderLayout.EAST);
+        southPanel.add(simTime);
+        add(southPanel, BorderLayout.SOUTH);
         add(pane,BorderLayout.CENTER);
         add(menubar, BorderLayout.NORTH);
-        tableModel = new DefaultTableModel(new Object[]{"Product ID","Product Name","Product Quantity"},0);
+        tableModel = new DefaultTableModel(new Object[]{"Product ID","Product Name","Product Quantity"},0) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+            	  return !(columnIndex < 2);
+            	}
+        };
         for(int i=0; i<gnomearray.length; i++){
         	tableModel.addRow(new Object[]{i+1,gnomearray[i], gnomequantity[i]});
         }
         table.setModel(tableModel);
-        btnAdd.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                count = tableModel.getRowCount()+1;
-                tableModel.addRow(new Object[]{count,txtField2.getText(),txtField3.getText()});
+        for(int i =0; i<gnomearray.length;i++){
+        	if(gnomequantity[i]<50){
+        	stockListMessage = stockListMessage + "Name: " + gnomearray[i] + "            Quantity: " + gnomequantity[i] + "\n";
+        	}
+        }
+        
+        
+        
+        tableModel.addTableModelListener(new TableModelListener() {
+            public void tableChanged(TableModelEvent e) {
+               System.out.println("That's amazing that");
             }
-        });
-
+          });
     }
 
+    private static void stockListMsg(){
+        JOptionPane.showMessageDialog(null, "The following products are low in quantity\n\n" + stockListMessage);
+    }
+    
     public static void main(String[] args) {
-        /*SwingUtilities.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() {
 
             @Override
             public void run() {
@@ -157,9 +151,13 @@ public class FrmTable extends JFrame{
                 frm.pack();
                 frm.setDefaultCloseOperation(EXIT_ON_CLOSE);
                 frm.setLocationRelativeTo(null);
-                frm.setVisible(true);   
+                frm.setVisible(true);
+                
+                po = new PurchaseOrder();
+                stockListMsg();
+               
             }
 
-        });*/
+        });
     }
 } 

@@ -3,16 +3,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 public class PurchaseOrder extends JFrame {
@@ -23,7 +17,7 @@ public class PurchaseOrder extends JFrame {
     private int[] gnomequantity = {23,42,234};
     private String[] supplierarray = {"Gringotts", "Hogwarts" ,"Shreaking Shack"};
 
-    private PurchaseOrder() {
+    public PurchaseOrder() {
         createGUI();
     }
 
@@ -49,23 +43,10 @@ public class PurchaseOrder extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Du Herro");
+            dispose();
+            JOptionPane.showMessageDialog(null, "Your purchase order has been sent");
         }
     });
     
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                PurchaseOrder po = new PurchaseOrder();
-                po.pack();
-                po.setDefaultCloseOperation(EXIT_ON_CLOSE);
-                po.setLocationRelativeTo(null);
-                po.setVisible(true);   
-            }
-
-        });
     }
 } 
