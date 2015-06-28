@@ -149,7 +149,7 @@ public class FrmTable extends JFrame{
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
+        /*SwingUtilities.invokeLater(new Runnable() {
 
             @Override
             public void run() {
@@ -160,6 +160,6 @@ public class FrmTable extends JFrame{
                 frm.setVisible(true);   
             }
 
-        });
+        });*/
     }
 } 
