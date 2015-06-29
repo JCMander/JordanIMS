@@ -58,40 +58,30 @@ public class DatabaseConnection {
               }
        }
 
-       public void createEntry(){ // Add a row to the database
-    	   for(int i=33;i<66;i++){
+       public void createEntry(int sql7, String sql8){ // Add a row to the database
               System.out.println("Inserting records into table");
               try {
                      stmt = conn.createStatement();
-                     String sql = "INSERT INTO Product VALUES (" + (i+1) + ", '" + gnomeArray[i] + " Gnome', "+rnd.nextInt(250)+")";
+                     String sql = "INSERT INTO Product VALUES (" + sql7 + ", '" + sql8 + "', " + 0 + ")";
                      stmt.executeUpdate(sql);
                      System.out.println("Inserted into tables");
               } catch (SQLException e) {
                      // TODO Auto-generated catch block
                      e.printStackTrace();
               }
-    	   }
        }
        
        public void readDB(){ // Read the database row by row
-    	   //int dbcounter = 0 ;
     	   System.out.println("Creating statement...");
     	   try {
     		   stmt = conn.createStatement();
     		   String sql2 = "SELECT ProductID, ProductName, ProductQuantity FROM Product";
     		   ResultSet rs = stmt.executeQuery(sql2);
     		   while (rs.next()){
-    			   //int id = rs.getInt("ProductID");
-    			   //String name = rs.getString("ProductName");
-    			   //int quantity = rs.getInt("ProductQuantity");
     			   productID.add(rs.getInt("ProductID"));
     			   productName.add(rs.getString("ProductName"));
     			   productQuantity.add(rs.getInt("ProductQuantity"));
-    			   //System.out.println("ID: " + id + ", name: " + name + ", quantity: " + quantity + ", dbcounter: " + dbcounter);
-    			   //System.out.println(ProductArray[dbcounter][0] + " " + ProductArray[dbcounter][1] + " " + ProductArray[dbcounter][2] + " ");
-    			   //dbcounter++;
     		   }
-    		   //dbcounter=0;
     		   rs.close();
     	   }catch (SQLException e){
     		// TODO Auto-generated catch block

@@ -1,8 +1,10 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -13,11 +15,10 @@ public class PurchaseOrder extends JFrame {
 	private JTable table;
     private JButton btnSend;
     private DefaultTableModel tableModel;
-    private String[] gnomearray = {"Gnome1","Gnome2","Gnome3"};
-    private int[] gnomequantity = {23,42,234};
-    private String[] supplierarray = {"Gringotts", "Hogwarts" ,"Shreaking Shack"};
+    private int totalPrice = 0;
 
     public PurchaseOrder() {
+        tableModel = new DefaultTableModel(new Object[]{"Product Name","Order Quantity", "Supplier", "Price"},0);
         createGUI();
     }
 
@@ -31,12 +32,6 @@ public class PurchaseOrder extends JFrame {
         southPanel.add(btnSend);
         add(southPanel,BorderLayout.SOUTH);
         add(pane,BorderLayout.CENTER);
-        tableModel = new DefaultTableModel(new Object[]{"Product Name","Order Quantity", "Supplier", "Price"},0);
-        for(int i=0; i<gnomearray.length; i++){
-        	if(gnomequantity[i]<50){
-        	tableModel.addRow(new Object[]{gnomearray[i], (250 - gnomequantity[i]), supplierarray[i], "$" + (10*(250 - gnomequantity[i])) + ".00"});
-        	}
-        }
         table.setModel(tableModel);
     
     btnSend.addActionListener(new ActionListener(){
@@ -49,4 +44,16 @@ public class PurchaseOrder extends JFrame {
     });
     
     }
+    
+    public void addProductToOrder(int productID, String productName, int productQuantity){
+    	if(productQuantity<=50){
+    		totalPrice+=(10*(250-productQuantity));
+    	tableModel.addRow(new Object[]{productName, (250 - productQuantity), "NB Gardens", "$" + (10*(250 - productQuantity)) + ".00"});
+    	}
+    }
+    
+    public void addTotalPrice(){
+        tableModel.addRow(new Object[]{"Total Price", "", "", "$" + totalPrice + ".00"});
+    }
+    
 } 
