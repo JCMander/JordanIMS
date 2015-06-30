@@ -20,6 +20,7 @@ public class PurchaseOrder extends JFrame {
     private int totalPrice = 0;
     private int userinput1;
     private int idConvert;
+    private int priceConvert;
 
     public PurchaseOrder() {
         tableModel = new DefaultTableModel(new Object[]{"ProductID", "Product Name","Order Quantity", "Supplier", "Price"},0){
@@ -64,7 +65,11 @@ public class PurchaseOrder extends JFrame {
     btnAdd.addActionListener(new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e) {
+        	tableModel.removeRow(tableModel.getRowCount()-1);
         	
+        	totalPrice+=1;
+        	
+        	tableModel.addRow(new Object[]{"", "Total Price", "", "", "$" + totalPrice + ".00"});
         }
     });
     
@@ -73,17 +78,23 @@ public class PurchaseOrder extends JFrame {
         public void actionPerformed(ActionEvent e) {
         	if(table.getSelectedRow() == -1){
             	userinput1 = Integer.parseInt((String)JOptionPane.showInputDialog("Please enter the ID of the product you wish to remove"));
+            	tableModel.removeRow(tableModel.getRowCount()-1);
             	for(int i =0; i<table.getRowCount()-1;i++){
             		idConvert=(Integer)table.getValueAt(i, 0);
+            		priceConvert=(Integer)table.getValueAt(i, 4);
+            		System.out.println(priceConvert);
             		if(userinput1 == idConvert){
             			tableModel.removeRow(i);
+            			totalPrice-=priceConvert;
             		}
-
             	}
-            	//tableModel.
         	}else{
+        		tableModel.removeRow(tableModel.getRowCount()-1);
+        		priceConvert=(Integer)table.getValueAt(table.getSelectedRow(), 4);
         		tableModel.removeRow(table.getSelectedRow());
+        		totalPrice-=priceConvert;
         	}
+        	tableModel.addRow(new Object[]{"", "Total Price", "", "", "$" + totalPrice + ".00"});
         }
     });
     
@@ -93,7 +104,7 @@ public class PurchaseOrder extends JFrame {
 
     	if(productQuantity<=50){
     		totalPrice+=(10*(250-productQuantity));
-    	tableModel.addRow(new Object[]{productID, productName, (250 - productQuantity), "NB Gardens", "$" + (10*(250 - productQuantity)) + ".00"});
+    	tableModel.addRow(new Object[]{productID, productName, (250 - productQuantity), "NB Gardens",(10*(250 - productQuantity))});
     	}
     }
     

@@ -28,6 +28,8 @@ public class FrmTable extends JFrame{
     private int confirmProductName;
 	private int userinput1;
 	private int userinput2;
+	private int updateCell;
+	private int updateRow;
 
     public FrmTable() {
     	
@@ -185,8 +187,10 @@ public class FrmTable extends JFrame{
     public void addTableListener(){
         tableModel.addTableModelListener(new TableModelListener() {
             public void tableChanged(TableModelEvent e) {
-            	updateTable();
-               System.out.println("That's amazing that");
+            	updateRow = table.getSelectedRow();
+            	updateCell=Integer.parseInt((String) tableModel.getValueAt(updateRow,2));
+            	al.updateProduct(updateRow+1, updateCell);
+            	System.out.println(updateCell);
             }
           });
     }
