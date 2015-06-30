@@ -32,9 +32,6 @@ public class AppLoader {
 		
 		rnd = new Random();
 
-		int usertest1;
-		int usertest2;
-
 		db = new DatabaseConnection();
 		frm = new FrmTable();
 		po = new PurchaseOrder();
@@ -49,33 +46,6 @@ public class AppLoader {
 
         frm.setVisible(true);	
         makeTable();
-
-		/**Update quantity code starts here**/
-		/*
-		Scanner usermsg1 = new Scanner(System.in);
-		System.out.println("Enter a product ID");
-		usertest1 = usermsg1.nextInt();
-		for(int i = 0; i < productID.size(); i++){
-			if(usertest1==productID.get(i)){
-				System.out.println(productID.get(i) + ", " + productName.get(i) + ", " + productQuantity.get(i) + ".");
-				i=productID.size()-1;
-			}else if(usertest1!=productID.get(i) && productID.get(i)>(productID.size()-1)){
-				System.out.println("The product ID entered is invalid, please try again");
-			}	
-		}
-
-		System.out.println("Enter a quantity");
-		usertest2 = usermsg1.nextInt();
-		db.updateDB(usertest1, usertest2);
-		productQuantity.set(usertest1-1, usertest2);
-		System.out.println("You entered " + usertest2);
-		for(int i=0; i<productID.size(); i++){
-			//System.out.println(productID.size());
-			System.out.println(productID.get(i) + ", " + productName.get(i) + ", " + productQuantity.get(i) + ".");
-		}
-		db.closeDB();
-		*/
-		/**Update quantity code ends here**/
 			
 		/** Simulation code starts here **/
 		/*
@@ -156,13 +126,16 @@ public class AppLoader {
 	}
 	
 	public void generatePurchaseOrder(){
+		
 		for(int i=0; i<productID.size(); i++){
 			po.addProductToOrder(productID.get(i), productName.get(i), productQuantity.get(i));
 		}
+		
 		po.addTotalPrice();
 		po.pack();
         po.setLocationRelativeTo(null);
         po.setVisible(true); 
+
 	}
 	
 	public static void makeTable(){

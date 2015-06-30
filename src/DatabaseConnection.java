@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Random;
 
 /** Class used to access, CRUD and close the database
  * Also used to convert the database into a number of ArrayLists **/
@@ -15,24 +14,17 @@ public class DatabaseConnection {
        static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
        static final String DB_URL = "jdbc:mysql://localhost/mydb";
        static final String USER = "JM";
-       static final String PASS = "root";
-       private Random rnd = new Random();
-       
-       private String[] gnomeArray = {"Hippy", "King", "Queen", "Nuclear", "Biohazard", "Obama", "Redneck", "Business", "Chav", "Beiber", "Potter", "Wolverine", "Iron Man", "Voldemort", "Jedi", "Sith", "Picard", "Angel", "Gun", "Big Gun",  "Bazooka", "Tank", "Police", "French", "Australian", "Insane", "Demon", "Samurai", "Time Lord", "Chewbacca", "Roman", "Greek", "Other"};
-       
+       static final String PASS = "root";  
        private Statement stmt;
        private Connection conn;
-       
        private ArrayList<Integer> productID;
        private ArrayList<String> productName;
        private ArrayList<Integer> productQuantity;
        
-       public DatabaseConnection(){
-    	   
+       public DatabaseConnection(){	   
     	   productID = new ArrayList<Integer>();
     	   productName = new ArrayList<String>();
-    	   productQuantity = new ArrayList<Integer>();
-    	   
+    	   productQuantity = new ArrayList<Integer>();   
        }
    
        public ArrayList<Integer> getProductID(){
@@ -44,7 +36,7 @@ public class DatabaseConnection {
        public ArrayList<Integer> getProductQuantity(){
     	   return productQuantity;
        }
-       
+     
        public void accessDB(){ // Establish the connection to the database
               conn = null;
               stmt = null;

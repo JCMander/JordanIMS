@@ -25,7 +25,7 @@ public class FrmTable extends JFrame{
     private String newProductName;
     private static AppLoader al;
     private JLabel simTime;
-
+    private int confirmProductName;
 	private int userinput1;
 	private int userinput2;
 
@@ -85,17 +85,21 @@ public class FrmTable extends JFrame{
             			+ "Product Name: " + tableModel.getValueAt(userinput1 - 1, 1) + "   Product Quantity: "
             			+ "" + tableModel.getValueAt(userinput1 - 1, 2) + "\n\nPlease enter the new quantity"));
             	al.updateProduct(userinput1, userinput2 );
-            }
+            	tableModel.setValueAt(userinput2, userinput1-1, 2);
+            	}
         });
         addProduct.addActionListener(new ActionListener(){
         	@Override
         	public void actionPerformed(ActionEvent e){
         		newProductName = (String)JOptionPane.showInputDialog("Please enter the name of the new product");
-        		System.out.println(newProductName);
-        		System.out.println("Jake");
-        		count = tableModel.getRowCount()+1;
-        		al.addProduct(count, newProductName);;
-                tableModel.addRow(new Object[]{count,newProductName,0});
+        		confirmProductName = JOptionPane.showConfirmDialog(null,"Would you like to add the product " + newProductName + "?","Confirm", JOptionPane.YES_NO_OPTION);
+				if(confirmProductName == JOptionPane.YES_OPTION){
+	        		count = tableModel.getRowCount()+1;
+	        		al.addProduct(count, newProductName);;
+	                tableModel.addRow(new Object[]{count,newProductName,0});
+				}else{
+					JOptionPane.showMessageDialog(null, "Request cancelled");
+				}
         	}
         });
         simulateDays.addActionListener(new ActionListener(){
