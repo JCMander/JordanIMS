@@ -135,6 +135,7 @@ public class AppLoader {
 		po.pack();
         po.setLocationRelativeTo(null);
         po.setVisible(true); 
+        po.addTableListener();
 
 	}
 	
@@ -155,4 +156,14 @@ public class AppLoader {
 	public void updateProduct(int id, int quantity){
 		db.updateDB(id, quantity);
 	}
+	
+	public String getProductName(int name1){
+		return productName.get(name1-1);
+	} 
+	
+	public int getProductQuantity(int name1){
+		return productQuantity.get(name1-1);
+		
+	} 
+	
 }

@@ -9,9 +9,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 public class PurchaseOrder extends JFrame {
+	private static AppLoader al;
 	private JTable table;
     private JButton btnSend;
     private JButton btnAdd;
@@ -19,10 +22,18 @@ public class PurchaseOrder extends JFrame {
     private DefaultTableModel tableModel;
     private int totalPrice = 0;
     private int userinput1;
+    private int userinput2;
     private int idConvert;
     private int priceConvert;
+    private String productName;
+    private int productQuantity;
+    private boolean exists;
+    private int[] removeRows;
+	private int updateCell;
+	private int updateRow;
 
     public PurchaseOrder() {
+    	al = new AppLoader();
         tableModel = new DefaultTableModel(new Object[]{"ProductID", "Product Name","Order Quantity", "Supplier", "Price"},0){
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -48,6 +59,8 @@ public class PurchaseOrder extends JFrame {
         add(southPanel,BorderLayout.SOUTH);
         add(pane,BorderLayout.CENTER);
         table.setModel(tableModel);
+        
+
     
     btnSend.addActionListener(new ActionListener(){
         @Override
@@ -65,10 +78,28 @@ public class PurchaseOrder extends JFrame {
     btnAdd.addActionListener(new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e) {
+        	userinput1 = Integer.parseInt((String)JOptionPane.showInputDialog("Please enter the ID of the product you wish to add"));
+        	productName = al.getProductName(userinput1);
+        	productQuantity = al.getProductQuantity(userinput1); 
+        	userinput2 = Integer.parseInt((String)JOptionPane.showInputDialog("Product ID: " + userinput1 + "   "
+        			+ "Product Name: " + productName + "   Current Product Quantity: "
+        			+ productQuantity + "\n\nPlease enter the quantity you would like to order"));
+        	
+        	for(int i =0; i<table.getRowCount()-1;i++){
+        		idConvert=(Integer)table.getValueAt(i, 0);
+        		priceConvert=(Integer)table.getValueAt(i, 4);
+        		if(userinput1 == idConvert){
+        			exists = true;
+        			table.setValueAt(priceConvert + (userinput2*10), i, 4);
+        			table.setValueAt((Integer)table.getValueAt(i, 2 ) + userinput2, i, 2);
+        		}
+        	}
+        	
         	tableModel.removeRow(tableModel.getRowCount()-1);
-        	
-        	totalPrice+=1;
-        	
+        	if(!exists){
+        		tableModel.addRow(new Object[]{userinput1, productName, userinput2, "NB Gardens",(10*userinput2)});
+        	}
+        	totalPrice+=(10*userinput2);
         	tableModel.addRow(new Object[]{"", "Total Price", "", "", "$" + totalPrice + ".00"});
         }
     });
@@ -79,7 +110,7 @@ public class PurchaseOrder extends JFrame {
         	if(table.getSelectedRow() == -1){
             	userinput1 = Integer.parseInt((String)JOptionPane.showInputDialog("Please enter the ID of the product you wish to remove"));
             	tableModel.removeRow(tableModel.getRowCount()-1);
-            	for(int i =0; i<table.getRowCount()-1;i++){
+            	for(int i =0; i<table.getRowCount();i++){
             		idConvert=(Integer)table.getValueAt(i, 0);
             		priceConvert=(Integer)table.getValueAt(i, 4);
             		System.out.println(priceConvert);
@@ -90,9 +121,12 @@ public class PurchaseOrder extends JFrame {
             	}
         	}else{
         		tableModel.removeRow(tableModel.getRowCount()-1);
-        		priceConvert=(Integer)table.getValueAt(table.getSelectedRow(), 4);
-        		tableModel.removeRow(table.getSelectedRow());
-        		totalPrice-=priceConvert;
+        		removeRows = table.getSelectedRows();
+        		for(int i=0; i<removeRows.length; i++){
+            		tableModel.removeRow(removeRows[i]-i);
+            		priceConvert=(Integer)table.getValueAt(removeRows[i]-i, 4);
+            		totalPrice-=priceConvert;
+        		}
         	}
         	tableModel.addRow(new Object[]{"", "Total Price", "", "", "$" + totalPrice + ".00"});
         }
@@ -110,6 +144,20 @@ public class PurchaseOrder extends JFrame {
     
     public void addTotalPrice(){
         tableModel.addRow(new Object[]{"", "Total Price", "", "", "$" + totalPrice + ".00"});
+    }
+
+    public void addTableListener(){
+        tableModel.addTableModelListener(new TableModelListener() {
+            public void tableChanged(TableModelEvent e) {
+            	updateRow = table.getSelectedRow();
+            	System.out.println(updateRow);
+        		priceConvert=(Integer)table.getValueAt(updateRow, 4);
+        		System.out.println(priceConvert);
+            	updateCell=Integer.parseInt((String) tableModel.getValueAt(updateRow,2));
+            	System.out.println(updateCell);
+            	//table.setValueAt((updateCell*10), updateRow, 4);
+            }
+          });
     }
     
 } 
