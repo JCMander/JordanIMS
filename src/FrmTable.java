@@ -36,7 +36,7 @@ public class FrmTable extends JFrame{
     	tableModel = new DefaultTableModel(new Object[]{"Product ID","Product Name","Product Quantity"},0) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-            	  return !(columnIndex < 2);
+            	  return !(columnIndex > -1);
             	}
         };
     	
@@ -45,6 +45,8 @@ public class FrmTable extends JFrame{
     }
 
     private void createGUI() {
+    	
+    	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	
     	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");    
 		Date date = new Date();
@@ -97,7 +99,7 @@ public class FrmTable extends JFrame{
         		confirmProductName = JOptionPane.showConfirmDialog(null,"Would you like to add the product " + newProductName + "?","Confirm", JOptionPane.YES_NO_OPTION);
 				if(confirmProductName == JOptionPane.YES_OPTION){
 	        		count = tableModel.getRowCount()+1;
-	        		al.addProduct(count, newProductName);;
+	        		al.addProduct(count, newProductName);
 	                tableModel.addRow(new Object[]{count,newProductName,0});
 				}else{
 					JOptionPane.showMessageDialog(null, "Request cancelled");
@@ -139,62 +141,23 @@ public class FrmTable extends JFrame{
         model.addRow(new Object[]{productID, productName, productQuantity});
     }
     
-    public void updateTable(){
-		/*
-		 
-		             	
-            	gnomequantity[updateTableID-1]= updateTableQuantity;
-                for(int i = tableModel.getRowCount() - 1; i > -1; i--){
-                	tableModel.removeRow(i);
-                }
-                for(int i=0; i<gnomearray.length; i++){
-                	tableModel.addRow(new Object[]{i+1,gnomearray[i], gnomequantity[i]});
-                }
-                count=0;
-                System.out.println("Hello");
-		  
-		  
-		 *
-		Scanner usermsg1 = new Scanner(System.in);
-		System.out.println("Enter a product ID");
-		usertest1 = usermsg1.nextInt();
-		for(int i = 0; i < productID.size(); i++){
-			if(usertest1==productID.get(i)){
-				System.out.println(productID.get(i) + ", " + productName.get(i) + ", " + productQuantity.get(i) + ".");
-				i=productID.size()-1;
-			}else if(usertest1!=productID.get(i) && productID.get(i)>(productID.size()-1)){
-				System.out.println("The product ID entered is invalid, please try again");
-			}	
-		}
-
-		System.out.println("Enter a quantity");
-		usertest2 = usermsg1.nextInt();
-		db.updateDB(usertest1, usertest2);
-		productQuantity.set(usertest1-1, usertest2);
-		System.out.println("You entered " + usertest2);
-		for(int i=0; i<productID.size(); i++){
-			//System.out.println(productID.size());
-			System.out.println(productID.get(i) + ", " + productName.get(i) + ", " + productQuantity.get(i) + ".");
-		}
-		db.closeDB();
-		*/
-    }
-    
     public void simulateDays(){}
     
     public void generatePurchaseOrder(){}
     
-    public void addTableListener(){
+    /*public void addTableListener(){
         tableModel.addTableModelListener(new TableModelListener() {
             public void tableChanged(TableModelEvent e) {
-            	updateRow = table.getSelectedRow();
-            	updateCell=Integer.parseInt((String) tableModel.getValueAt(updateRow,2));
-            	al.updateProduct(updateRow+1, updateCell);
-            	System.out.println(updateCell);
+            	if(tableModel.getValueAt(table.getSelectedRow(),2) != null){
+
+            	//updateRow = table.getSelectedRow();
+            	//updateCell=Integer.parseInt((String) tableModel.getValueAt(updateRow,2));
+            	//al.updateProduct(updateRow+1, updateCell);
+            	System.out.println(table.getSelectedRow());
+            	}
             }
           });
-    }
-    
+    }*/
 
     
 } 

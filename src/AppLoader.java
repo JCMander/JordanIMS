@@ -135,7 +135,6 @@ public class AppLoader {
 		po.pack();
         po.setLocationRelativeTo(null);
         po.setVisible(true); 
-        po.addTableListener();
 
 	}
 	
@@ -144,7 +143,6 @@ public class AppLoader {
 		for(int i=0; i<productID.size(); i++){
 			frm.addProductToTable(productID.get(i), productName.get(i), productQuantity.get(i));
 		}
-		frm.addTableListener();
 		stockListMessage();
 		/** Make the table code ends here **/
 	}

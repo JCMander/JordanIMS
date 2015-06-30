@@ -31,13 +31,14 @@ public class PurchaseOrder extends JFrame {
     private int[] removeRows;
 	private int updateCell;
 	private int updateRow;
+	private int[] updateRows;
 
     public PurchaseOrder() {
     	al = new AppLoader();
         tableModel = new DefaultTableModel(new Object[]{"ProductID", "Product Name","Order Quantity", "Supplier", "Price"},0){
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-            	  return !(columnIndex != 2);
+            	  return !(columnIndex > -1);
             	}
         };;
         createGUI();
@@ -45,6 +46,7 @@ public class PurchaseOrder extends JFrame {
 
     private void createGUI() {
     	
+    	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         JScrollPane pane = new JScrollPane();
         table = new JTable();
@@ -123,8 +125,8 @@ public class PurchaseOrder extends JFrame {
         		tableModel.removeRow(tableModel.getRowCount()-1);
         		removeRows = table.getSelectedRows();
         		for(int i=0; i<removeRows.length; i++){
-            		tableModel.removeRow(removeRows[i]-i);
             		priceConvert=(Integer)table.getValueAt(removeRows[i]-i, 4);
+            		tableModel.removeRow(removeRows[i]-i);
             		totalPrice-=priceConvert;
         		}
         	}
@@ -146,18 +148,23 @@ public class PurchaseOrder extends JFrame {
         tableModel.addRow(new Object[]{"", "Total Price", "", "", "$" + totalPrice + ".00"});
     }
 
-    public void addTableListener(){
+    /*public void addTableListener(){
         tableModel.addTableModelListener(new TableModelListener() {
             public void tableChanged(TableModelEvent e) {
-            	updateRow = table.getSelectedRow();
-            	System.out.println(updateRow);
-        		priceConvert=(Integer)table.getValueAt(updateRow, 4);
-        		System.out.println(priceConvert);
-            	updateCell=Integer.parseInt((String) tableModel.getValueAt(updateRow,2));
-            	System.out.println(updateCell);
-            	//table.setValueAt((updateCell*10), updateRow, 4);
+            	updateRows = table.getSelectedRows();
+            	if(updateRows.length>1){
+            		System.out.println("Fantastic");
+            	}else if(exists){
+	            	updateRow = table.getSelectedRow();
+	            	System.out.println(updateRow);
+	        		priceConvert=(Integer)table.getValueAt(updateRow, 4);
+	        		System.out.println(priceConvert);
+	            	updateCell=Integer.parseInt((String) tableModel.getValueAt(updateRow,2));
+	            	System.out.println(updateCell);
+	            	//table.setValueAt((updateCell*10), updateRow, 4);
+            	}
             }
           });
-    }
+    }*/
     
 } 
