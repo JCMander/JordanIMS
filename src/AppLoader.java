@@ -23,7 +23,7 @@ public class AppLoader {
     private static ArrayList<String> productName;
     private static ArrayList<Integer> productQuantity;
     private static String report = "";
-    private static File reportFile = new File ("C:\\Users\\Jmander\\workspace\\JordanIMS\\reportfile");
+    private static File reportFile = new File ("reportfile");
     private static String stockListMessage = "";
     private String fileDate;
     
