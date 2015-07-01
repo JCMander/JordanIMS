@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.Scanner;
-
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
@@ -19,12 +18,12 @@ public class AppLoader {
 	private static DatabaseConnection db;
 	private static FrmTable frm;
 	private static PurchaseOrder po;
+	private static Random rnd;
 	private static ArrayList<Integer> productID;
     private static ArrayList<String> productName;
     private static ArrayList<Integer> productQuantity;
     private static String report = "";
     private static File reportFile = new File ("C:\\Users\\Jmander\\workspace\\JordanIMS\\reportfile");
-    private static Random rnd;
     private static String stockListMessage = "";
     private String fileDate;
     
@@ -127,11 +126,20 @@ public class AppLoader {
 	
 	public void generatePurchaseOrder(){
 		
+		db.readDB();
+		
+		productID = db.getProductID();
+		productName = db.getProductName();
+		productQuantity = db.getProductQuantity();
+		
+		db.closeDB();
+		
 		for(int i=0; i<productID.size(); i++){
 			po.addProductToOrder(productID.get(i), productName.get(i), productQuantity.get(i));
 		}
 		
 		po.addTotalPrice();
+		po.windowListener();
 		po.pack();
         po.setLocationRelativeTo(null);
         po.setVisible(true); 

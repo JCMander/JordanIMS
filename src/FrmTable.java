@@ -4,7 +4,6 @@ import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -14,8 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 public class FrmTable extends JFrame{
@@ -28,8 +25,6 @@ public class FrmTable extends JFrame{
     private int confirmProductName;
 	private int userinput1;
 	private int userinput2;
-	private int updateCell;
-	private int updateRow;
 
     public FrmTable() {
     	
@@ -115,7 +110,7 @@ public class FrmTable extends JFrame{
         simulateCustomDays.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Goteem");
+                System.out.println("HA! Goteem");
             }
         });
         saveReport.addActionListener(new ActionListener(){
@@ -142,22 +137,6 @@ public class FrmTable extends JFrame{
     }
     
     public void simulateDays(){}
-    
-    public void generatePurchaseOrder(){}
-    
-    /*public void addTableListener(){
-        tableModel.addTableModelListener(new TableModelListener() {
-            public void tableChanged(TableModelEvent e) {
-            	if(tableModel.getValueAt(table.getSelectedRow(),2) != null){
-
-            	//updateRow = table.getSelectedRow();
-            	//updateCell=Integer.parseInt((String) tableModel.getValueAt(updateRow,2));
-            	//al.updateProduct(updateRow+1, updateCell);
-            	System.out.println(table.getSelectedRow());
-            	}
-            }
-          });
-    }*/
 
     
 } 

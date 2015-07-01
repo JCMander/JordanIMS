@@ -1,16 +1,16 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 public class PurchaseOrder extends JFrame {
@@ -29,9 +29,6 @@ public class PurchaseOrder extends JFrame {
     private int productQuantity;
     private boolean exists;
     private int[] removeRows;
-	private int updateCell;
-	private int updateRow;
-	private int[] updateRows;
 
     public PurchaseOrder() {
     	al = new AppLoader();
@@ -46,7 +43,7 @@ public class PurchaseOrder extends JFrame {
 
     private void createGUI() {
     	
-    	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
         JScrollPane pane = new JScrollPane();
         table = new JTable();
@@ -99,7 +96,7 @@ public class PurchaseOrder extends JFrame {
         	
         	tableModel.removeRow(tableModel.getRowCount()-1);
         	if(!exists){
-        		tableModel.addRow(new Object[]{userinput1, productName, userinput2, "NB Gardens",(10*userinput2)});
+        		tableModel.addRow(new Object[]{userinput1, productName, userinput2, "Gnomes 'R' Us",(10*userinput2)});
         	}
         	totalPrice+=(10*userinput2);
         	tableModel.addRow(new Object[]{"", "Total Price", "", "", "$" + totalPrice + ".00"});
@@ -140,7 +137,7 @@ public class PurchaseOrder extends JFrame {
 
     	if(productQuantity<=50){
     		totalPrice+=(10*(250-productQuantity));
-    	tableModel.addRow(new Object[]{productID, productName, (250 - productQuantity), "NB Gardens",(10*(250 - productQuantity))});
+    	tableModel.addRow(new Object[]{productID, productName, (250 - productQuantity), "Gnomes 'R' Us",(10*(250 - productQuantity))});
     	}
     }
     
@@ -148,23 +145,13 @@ public class PurchaseOrder extends JFrame {
         tableModel.addRow(new Object[]{"", "Total Price", "", "", "$" + totalPrice + ".00"});
     }
 
-    /*public void addTableListener(){
-        tableModel.addTableModelListener(new TableModelListener() {
-            public void tableChanged(TableModelEvent e) {
-            	updateRows = table.getSelectedRows();
-            	if(updateRows.length>1){
-            		System.out.println("Fantastic");
-            	}else if(exists){
-	            	updateRow = table.getSelectedRow();
-	            	System.out.println(updateRow);
-	        		priceConvert=(Integer)table.getValueAt(updateRow, 4);
-	        		System.out.println(priceConvert);
-	            	updateCell=Integer.parseInt((String) tableModel.getValueAt(updateRow,2));
-	            	System.out.println(updateCell);
-	            	//table.setValueAt((updateCell*10), updateRow, 4);
-            	}
-            }
-          });
-    }*/
+    public void windowListener(){
+    	this.addWindowListener(new WindowAdapter(){
+    	        public void windowClosing(WindowEvent e)
+    	        {
+    	        	tableModel.getDataVector().removeAllElements();
+    	        }
+    	});
+    }
     
 } 
