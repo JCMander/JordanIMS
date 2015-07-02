@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -48,6 +49,8 @@ public class PurchaseOrder extends JFrame {
         JScrollPane pane = new JScrollPane();
         table = new JTable();
         pane.setViewportView(table);
+        table.setFont(new Font("SanSerif", Font.PLAIN, 16));
+        table.setRowHeight(30);
         JPanel southPanel = new JPanel();
         btnAdd = new JButton("Add");
         southPanel.add(btnAdd);

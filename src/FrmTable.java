@@ -1,9 +1,11 @@
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -43,6 +45,7 @@ public class FrmTable extends JFrame{
     	
     	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	
+    	
     	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");    
 		Date date = new Date();
     	
@@ -50,6 +53,8 @@ public class FrmTable extends JFrame{
         JScrollPane pane = new JScrollPane();
         table = new JTable();
         pane.setViewportView(table);
+        table.setFont(new Font("SanSerif", Font.PLAIN, 16));
+        table.setRowHeight(30);
         simTime = new JLabel(dateFormat.format(date));
         JPanel southPanel = new JPanel();
         JMenuBar menubar = new JMenuBar();
