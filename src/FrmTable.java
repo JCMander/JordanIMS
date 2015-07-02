@@ -57,7 +57,7 @@ public class FrmTable extends JFrame{
         JMenu anothermenu = new JMenu("Simulate");
         JMenu saveemenu = new JMenu("Stock Report");
         menubar.add(filemenu);
-        menubar.add(anothermenu);
+        //menubar.add(anothermenu);
         menubar.add(saveemenu);
         JMenuItem addProduct = new JMenuItem("Add New Product");
         JMenuItem updateQuantity = new JMenuItem("Update Quantity");
