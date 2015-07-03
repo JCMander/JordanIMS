@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Random;
 
 /** Class used to access, CRUD and close the database
  * Also used to convert the database into a number of ArrayLists **/
@@ -12,9 +13,10 @@ import java.util.ArrayList;
 public class DatabaseConnection {
        
        static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-       static final String DB_URL = "jdbc:mysql://10.50.25.26:3306/mydb";
+       static final String DB_URL = "jdbc:mysql://10.50.15.14:3306/mydb";
        static final String USER = "JM";
-       static final String PASS = "root";  
+       static final String PASS = "root"; 
+       private Random rnd;
        private Statement stmt;
        private Connection conn;
        private ArrayList<Integer> productID;
@@ -43,7 +45,7 @@ public class DatabaseConnection {
               
               try{
                      Class.forName(JDBC_DRIVER);
-                     System.out.println("Connecting to db");
+                     //System.out.println("Connecting to db");
                      conn = DriverManager.getConnection(DB_URL,USER,PASS);
               }catch(Exception e){
                      System.out.println(e);
@@ -64,7 +66,7 @@ public class DatabaseConnection {
        }
        
        public void readDB(){ // Read the database row by row
-    	   System.out.println("Creating statement...");
+    	   //System.out.println("Creating statement...");
     	   try {
     		   stmt = conn.createStatement();
     		   String sql2 = "SELECT ProductID, ProductName, ProductQuantity FROM Product";

@@ -1,11 +1,6 @@
 import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -49,8 +44,6 @@ public class PurchaseOrder extends JFrame {
         JScrollPane pane = new JScrollPane();
         table = new JTable();
         pane.setViewportView(table);
-        table.setFont(new Font("SanSerif", Font.PLAIN, 16));
-        table.setRowHeight(30);
         JPanel southPanel = new JPanel();
         btnAdd = new JButton("Add");
         southPanel.add(btnAdd);
@@ -148,13 +141,5 @@ public class PurchaseOrder extends JFrame {
         tableModel.addRow(new Object[]{"", "Total Price", "", "", "$" + totalPrice + ".00"});
     }
 
-    public void windowListener(){
-    	this.addWindowListener(new WindowAdapter(){
-    	        public void windowClosing(WindowEvent e)
-    	        {
-    	        	tableModel.getDataVector().removeAllElements();
-    	        }
-    	});
-    }
     
 } 

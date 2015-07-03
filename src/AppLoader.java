@@ -32,7 +32,6 @@ public class AppLoader {
 	public static void main(String[] args) {
 		
 		rnd = new Random();
-
 		db = new DatabaseConnection();
 		frm = new FrmTable();
 		po = new PurchaseOrder();
@@ -45,6 +44,7 @@ public class AppLoader {
 		productName = db.getProductName();
 		productQuantity = db.getProductQuantity();
 
+		
         frm.setVisible(true);	
         makeTable();
 			
@@ -128,20 +128,15 @@ public class AppLoader {
 	
 	public void generatePurchaseOrder(){
 		
-		db.readDB();
-		
 		productID = db.getProductID();
 		productName = db.getProductName();
 		productQuantity = db.getProductQuantity();
-		
-		db.closeDB();
 		
 		for(int i=0; i<productID.size(); i++){
 			po.addProductToOrder(productID.get(i), productName.get(i), productQuantity.get(i));
 		}
 		
 		po.addTotalPrice();
-		po.windowListener();
 		po.pack();
         po.setLocationRelativeTo(null);
         po.setVisible(true); 
@@ -156,6 +151,7 @@ public class AppLoader {
 		stockListMessage();
 		/** Make the table code ends here **/
 	}
+	
 
 	public void addProduct(int newid, String newname){
 		db.createEntry(newid, newname);
@@ -171,7 +167,6 @@ public class AppLoader {
 	
 	public int getProductQuantity(int name1){
 		return productQuantity.get(name1-1);
-		
 	} 
 	
 }

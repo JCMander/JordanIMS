@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -36,7 +35,7 @@ public class FrmTable extends JFrame{
             	  return !(columnIndex > -1);
             	}
         };
-    	
+
         createGUI();
         al = new AppLoader();
     }
@@ -45,7 +44,6 @@ public class FrmTable extends JFrame{
     	
     	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	
-    	
     	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");    
 		Date date = new Date();
     	
@@ -53,8 +51,6 @@ public class FrmTable extends JFrame{
         JScrollPane pane = new JScrollPane();
         table = new JTable();
         pane.setViewportView(table);
-        table.setFont(new Font("SanSerif", Font.PLAIN, 16));
-        table.setRowHeight(30);
         simTime = new JLabel(dateFormat.format(date));
         JPanel southPanel = new JPanel();
         JMenuBar menubar = new JMenuBar();
@@ -62,7 +58,7 @@ public class FrmTable extends JFrame{
         JMenu anothermenu = new JMenu("Simulate");
         JMenu saveemenu = new JMenu("Stock Report");
         menubar.add(filemenu);
-        //menubar.add(anothermenu);
+        menubar.add(anothermenu);
         menubar.add(saveemenu);
         JMenuItem addProduct = new JMenuItem("Add New Product");
         JMenuItem updateQuantity = new JMenuItem("Update Quantity");
@@ -108,8 +104,8 @@ public class FrmTable extends JFrame{
         });
         simulateDays.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Goteem");
+            public void actionPerformed(ActionEvent e) {    
+            	SimulationGUI.launch(SimulationGUI.class);
             }
         });
         simulateCustomDays.addActionListener(new ActionListener(){
@@ -131,7 +127,7 @@ public class FrmTable extends JFrame{
         		al.generatePurchaseOrder();
         	}
         });
-
+        
         table.setModel(tableModel);
         table.getTableHeader().setReorderingAllowed(false);
     }
