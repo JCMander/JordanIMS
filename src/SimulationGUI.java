@@ -59,23 +59,23 @@ public class SimulationGUI extends Application {
         	x4-=rnd.nextInt(25);
         	x5-=rnd.nextInt(25);
         	
-        		if(x1<=0){
+        		if(x1<=50){
         	        x1=250;
         	        series1.getData().add(new XYChart.Data(i,x1));
         		}
-        		if(x2<=0){
+        		if(x2<=50){
         	        x2=250;
         	        series2.getData().add(new XYChart.Data(i,x2));
         		}
-        		if(x3<=0){
+        		if(x3<=50){
         	        x3=250;
         	        series3.getData().add(new XYChart.Data(i,x3));
         		}
-        		if(x4<=0){
+        		if(x4<=50){
         	        x4=250;
         	        series4.getData().add(new XYChart.Data(i,x4));
         		}
-        		if(x5<=0){
+        		if(x5<=50){
         	        x5=250;
         	        series5.getData().add(new XYChart.Data(i,x5));
         		}
