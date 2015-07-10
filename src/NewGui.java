@@ -10,6 +10,7 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -35,6 +36,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -54,12 +56,18 @@ public class NewGui extends Application {
     private static String report = "";
     private static File reportFile = new File ("../reportfile");
     private String fileDate;
-	private Random rnd;
-	private int x1;
-	private int x2;
-	private int x3;
-	private int x4;
-	private int x5;
+	private static Random rnd;
+	private static int x1;
+	private static int x2;
+	private static int x3;
+	private static int x4;
+	private static int x5;
+	private static int count = 0;
+	static XYChart.Series series1 = new XYChart.Series();
+	static XYChart.Series series2 = new XYChart.Series();
+	static XYChart.Series series3 = new XYChart.Series();
+	static XYChart.Series series4 = new XYChart.Series();
+	static XYChart.Series series5 = new XYChart.Series();
     
     public static void main(String[] args) {
     	
@@ -144,14 +152,7 @@ public class NewGui extends Application {
 
              }
         }); 
-        MenuItem runSim = new MenuItem("Run Simulation");
-        runSim.setOnAction(new EventHandler<ActionEvent>() {
-             public void handle(ActionEvent t) {
-            	 System.out.println(data);
-            	 
-            	 System.out.println("Goteem");
-             }
-        }); 
+
         MenuItem printStock = new MenuItem("Print Stock Report");
         printStock.setOnAction(new EventHandler<ActionEvent>() {
              public void handle(ActionEvent t) {
@@ -209,10 +210,18 @@ public class NewGui extends Application {
             	 System.out.println("Fantastic");
              }
         }); 
- 
- 
+        
         final VBox vbox = new VBox();
+        
+        MenuItem runSim = new MenuItem("Run Simulation");
+        runSim.setOnAction(new EventHandler<ActionEvent>() {
+             public void handle(ActionEvent t) {
+                 simTest();
+             }
+        }); 
+        
         menuFile.getItems().addAll(addProduct, updateProduct, runSim, printStock, makeOrder);
+        
         vbox.getChildren().addAll(menuBar, table);
         
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
@@ -225,6 +234,81 @@ public class NewGui extends Application {
         data.add(new Product(productID, productName, productQuantity ));
     }
     
+public static void simTest(){
+	
+	final NumberAxis xAxis = new NumberAxis();
+    final NumberAxis yAxis = new NumberAxis();
+     xAxis.setLabel("Day");
+    final LineChart<Number, Number> lineChart = 
+            new LineChart<Number,Number>(xAxis,yAxis);
+   
+    lineChart.setTitle("Simulation");
+    
+    series1.setName("Portfolio 1");  
+    series2.setName("Portfolio 2");   
+    series3.setName("Portfolio 3");  
+    series4.setName("Portfolio 4");
+    series5.setName("Portfolio 5");
+    rnd = new Random();
+    
+    x1=rnd.nextInt(2500);
+    x2=rnd.nextInt(2500);
+    x3=rnd.nextInt(2500);
+    x4=rnd.nextInt(2500);
+    x5=rnd.nextInt(2500);
+    
+    addData();
+    
+    
+    
+    Scene scene  = new Scene(lineChart, 400,300);       
+    scene.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent mouseEvent) {
+            addData();
+        }
+    });
+    lineChart.getData().addAll(series1, series2, series3, series4, series5);
+    
+}
+
+public static void addData(){       
+        series1.getData().add(new XYChart.Data(count,x1));
+        series2.getData().add(new XYChart.Data(count,x2));
+        series3.getData().add(new XYChart.Data(count,x3));
+        series4.getData().add(new XYChart.Data(count,x4));
+        series5.getData().add(new XYChart.Data(count,x5));
+    	x1-=rnd.nextInt(200);
+    	x2-=rnd.nextInt(200);
+    	x3-=rnd.nextInt(200);
+    	x4-=rnd.nextInt(200);
+    	x5-=rnd.nextInt(200);
+    	
+    		if(x1<=50){
+    	        x1=2500;
+    	        series1.getData().add(new XYChart.Data(count,x1));
+    		}
+    		if(x2<=50){
+    	        x2=2500;
+    	        series2.getData().add(new XYChart.Data(count,x2));
+    		}
+    		if(x3<=50){
+    	        x3=2500;
+    	        series3.getData().add(new XYChart.Data(count,x3));
+    		}
+    		if(x4<=50){
+    	        x4=2500;
+    	        series4.getData().add(new XYChart.Data(count,x4));
+    		}
+    		if(x5<=50){
+    	        x5=2500;
+    	        series5.getData().add(new XYChart.Data(count,x5));
+    		}
+    	
+   count++; 		
+    
+}
+	
 
     
 }
