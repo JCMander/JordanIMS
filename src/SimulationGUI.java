@@ -48,8 +48,6 @@ public class SimulationGUI extends Application {
 		productName = db.getProductName();
 		productQuantity = db.getProductQuantity();
 		
-
-		
         stage.setTitle("Line Chart Sample");
         final NumberAxis xAxis = new NumberAxis();
         final NumberAxis yAxis = new NumberAxis();
@@ -60,18 +58,18 @@ public class SimulationGUI extends Application {
        
         lineChart.setTitle("Simulation");
         
-        series1.setName("Harry Potter Gnome");  
-        series2.setName("Ron Weasley Gnome");   
-        series3.setName("Voldemort Gnome");  
-        series4.setName("Dumbledore Gnome");
-        series5.setName("Hagrid Gnome");
+        series1.setName(productName.get(4));  
+        series2.setName(productName.get(6));  
+        series3.setName(productName.get(3));  
+        series4.setName(productName.get(7));  
+        series5.setName(productName.get(0));  
         rnd = new Random();
         
-        x1=rnd.nextInt(2500);
-        x2=rnd.nextInt(2500);
-        x3=rnd.nextInt(2500);
-        x4=rnd.nextInt(2500);
-        x5=rnd.nextInt(2500);
+        x1=productQuantity.get(4);
+        x2=productQuantity.get(6);
+        x3=productQuantity.get(3);
+        x4=productQuantity.get(7);
+        x5=productQuantity.get(0);
         
         addData();
         
@@ -84,6 +82,9 @@ public class SimulationGUI extends Application {
                 addData();
             }
         });
+        
+
+        
         lineChart.getData().addAll(series1, series2, series3, series4, series5);
         stage.setScene(scene);
         stage.show();
@@ -110,11 +111,11 @@ public class SimulationGUI extends Application {
 	        series3.getData().add(new XYChart.Data(count,x3));
 	        series4.getData().add(new XYChart.Data(count,x4));
 	        series5.getData().add(new XYChart.Data(count,x5));
-        	x1-=rnd.nextInt(200);
-        	x2-=rnd.nextInt(200);
-        	x3-=rnd.nextInt(200);
-        	x4-=rnd.nextInt(200);
-        	x5-=rnd.nextInt(200);
+        	x1-=rnd.nextInt(400);
+        	x2-=rnd.nextInt(400);
+        	x3-=rnd.nextInt(400);
+        	x4-=rnd.nextInt(400);
+        	x5-=rnd.nextInt(400);
         	
         		if(x1<=50){
         	        x1=2500;
