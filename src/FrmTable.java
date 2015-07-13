@@ -105,7 +105,7 @@ public class FrmTable extends JFrame{
         simulateDays.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {    
-            	//SimulationGUI.launch(SimulationGUI.class);
+            	SimulationGUI.launch(SimulationGUI.class);
             }
         });
         simulateCustomDays.addActionListener(new ActionListener(){

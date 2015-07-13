@@ -196,7 +196,7 @@ public class NewGui extends Application {
         MenuItem makeOrder = new MenuItem("Generate Purchase Order");
         makeOrder.setOnAction(new EventHandler<ActionEvent>() {
              public void handle(ActionEvent t) {
-            	 System.out.println("Fantastic");
+             	SimulationGUI.launch(SimulationGUI.class);
              }
         }); 
         
