@@ -24,6 +24,7 @@ public class AppLoader {
 	private static ArrayList<Integer> productID;
     private static ArrayList<String> productName;
     private static ArrayList<Integer> productQuantity;
+    private static ArrayList<Integer> productThreshold;
     private static String report = "";
     private static File reportFile = new File ("../reportfile");
     private static String stockListMessage = "";
@@ -39,33 +40,22 @@ public class AppLoader {
         frm.setLocationRelativeTo(null);
 		db.accessDB();
 		db.readDB();
-			
+					
 		productID = db.getProductID();
 		productName = db.getProductName();
 		productQuantity = db.getProductQuantity();
+		productThreshold = db.getProductThreshold();
 
-		
         frm.setVisible(true);	
         makeTable();
-			
-		/** Simulation code starts here **/
-		/*
-		for(int i =0; i<5; i++){
-			for(int j=0; j<productID.size();j++){
-				db.updateDB(rnd.nextInt(50),rnd.nextInt(50));
-				System.out.println(productID.get(i) + ", " + productName.get(i) + ", " + productQuantity.get(i) + ".");
-			}
-		}
-		*/
-		/** Simulation code ends here **/
-			
+						
 	}
 
 	public static void stockListMessage(){
 		/** Message to show when quantity is low code starts here**/
 		int msgcount =0;
 		for(int i=0; i<productID.size(); i++){
-			if(productQuantity.get(i)<=50){
+			if(productQuantity.get(i)<=productThreshold.get(i)){
 				stockListMessage = stockListMessage +  productName.get(i) + "      Quantity: " + productQuantity.get(i) + "\n";
 				msgcount++;
 			}
@@ -131,6 +121,7 @@ public class AppLoader {
 		productID = db.getProductID();
 		productName = db.getProductName();
 		productQuantity = db.getProductQuantity();
+		productThreshold = db.getProductThreshold();
 		
 		for(int i=0; i<productID.size(); i++){
 			po.addProductToOrder(productID.get(i), productName.get(i), productQuantity.get(i));
@@ -146,7 +137,7 @@ public class AppLoader {
 	public static void makeTable(){
 		/** Make the table code starts here **/
 		for(int i=0; i<productID.size(); i++){
-			frm.addProductToTable(productID.get(i), productName.get(i), productQuantity.get(i));
+			frm.addProductToTable(productID.get(i), productName.get(i), productQuantity.get(i), productThreshold.get(i));
 		}
 		stockListMessage();
 		/** Make the table code ends here **/
@@ -159,6 +150,11 @@ public class AppLoader {
 
 	public void updateProduct(int id, int quantity){
 		db.updateDB(id, quantity);
+	}
+	
+	public void updateThreshold(int id, int threshold){
+ 	   System.out.println("here with" + id + ":" + threshold);
+		db.updateDBThreshold(id, threshold);
 	}
 	
 	public String getProductName(int name1){

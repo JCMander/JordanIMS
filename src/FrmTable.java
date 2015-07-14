@@ -29,7 +29,7 @@ public class FrmTable extends JFrame{
 
     public FrmTable() {
     	
-    	tableModel = new DefaultTableModel(new Object[]{"Product ID","Product Name","Product Quantity"},0) {
+    	tableModel = new DefaultTableModel(new Object[]{"Product ID","Product Name","Product Quantity", "Product Threshold"},0) {
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
             	  return !(columnIndex > -1);
@@ -43,6 +43,7 @@ public class FrmTable extends JFrame{
     private void createGUI() {
     	
     	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	this.setPreferredSize(getMaximumSize());;
     	
     	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");    
 		Date date = new Date();
@@ -62,12 +63,12 @@ public class FrmTable extends JFrame{
         menubar.add(saveemenu);
         JMenuItem addProduct = new JMenuItem("Add New Product");
         JMenuItem updateQuantity = new JMenuItem("Update Quantity");
-        filemenu.add(updateQuantity);
+        JMenuItem updateThreshold = new JMenuItem("Update Threshold");
         filemenu.add(addProduct);
-        JMenuItem simulateDays = new JMenuItem("Default Simulation (5 days)");
-        JMenuItem simulateCustomDays = new JMenuItem("Custom Simulation");
+        filemenu.add(updateQuantity);
+        filemenu.add(updateThreshold);
+        JMenuItem simulateDays = new JMenuItem("Create Simulation");
         anothermenu.add(simulateDays);
-        anothermenu.add(simulateCustomDays);
         JMenuItem saveReport = new JMenuItem("Generate Stock Report");
         JMenuItem makeOrder = new JMenuItem("Generate Purchase Order");
         saveemenu.add(saveReport);
@@ -83,9 +84,22 @@ public class FrmTable extends JFrame{
             	userinput1 = Integer.parseInt((String)JOptionPane.showInputDialog("Please enter the id of the product you wish to change"));
             	userinput2 = Integer.parseInt((String)JOptionPane.showInputDialog("Product ID: " + userinput1 + "   "
             			+ "Product Name: " + tableModel.getValueAt(userinput1 - 1, 1) + "   Product Quantity: "
-            			+ "" + tableModel.getValueAt(userinput1 - 1, 2) + "\n\nPlease enter the new quantity"));
+            			+ "" + tableModel.getValueAt(userinput1 - 1, 2) + "   Product Threshold: "
+            			+ "" + tableModel.getValueAt(userinput1 - 1, 3) + "\n\nPlease enter the new quantity"));
             	al.updateProduct(userinput1, userinput2 );
             	tableModel.setValueAt(userinput2, userinput1-1, 2);
+            	}
+        });
+        updateThreshold.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	userinput1 = Integer.parseInt((String)JOptionPane.showInputDialog("Please enter the id of the product you wish to change"));
+            	userinput2 = Integer.parseInt((String)JOptionPane.showInputDialog("Product ID: " + userinput1 + "   "
+            			+ "Product Name: " + tableModel.getValueAt(userinput1 - 1, 1) + "   Product Quantity: "
+            			+ "" + tableModel.getValueAt(userinput1 - 1, 2) + "   Product Threshold: "
+            			+ "" + tableModel.getValueAt(userinput1 - 1, 3) + "\n\nPlease enter the new threshold"));
+            	al.updateThreshold(userinput1, userinput2 );
+            	tableModel.setValueAt(userinput2, userinput1-1, 3);
             	}
         });
         addProduct.addActionListener(new ActionListener(){
@@ -96,7 +110,7 @@ public class FrmTable extends JFrame{
 				if(confirmProductName == JOptionPane.YES_OPTION){
 	        		count = tableModel.getRowCount()+1;
 	        		al.addProduct(count, newProductName);
-	                tableModel.addRow(new Object[]{count,newProductName,0});
+	                tableModel.addRow(new Object[]{count,newProductName,0, 500});
 				}else{
 					JOptionPane.showMessageDialog(null, "Request cancelled");
 				}
@@ -104,14 +118,8 @@ public class FrmTable extends JFrame{
         });
         simulateDays.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {    
+            public void actionPerformed(ActionEvent e) {   
             	SimulationGUI.launch(SimulationGUI.class);
-            }
-        });
-        simulateCustomDays.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("HA! Goteem");
             }
         });
         saveReport.addActionListener(new ActionListener(){
@@ -132,12 +140,9 @@ public class FrmTable extends JFrame{
         table.getTableHeader().setReorderingAllowed(false);
     }
     
-    public void addProductToTable(int productID, String productName, int productQuantity){
+    public void addProductToTable(int productID, String productName, int productQuantity, int productThreshold){
     	DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addRow(new Object[]{productID, productName, productQuantity});
+        model.addRow(new Object[]{productID, productName, productQuantity, productThreshold});
     }
-    
-    public void simulateDays(){}
-
     
 } 

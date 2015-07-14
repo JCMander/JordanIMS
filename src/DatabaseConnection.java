@@ -22,11 +22,13 @@ public class DatabaseConnection {
        private ArrayList<Integer> productID;
        private ArrayList<String> productName;
        private ArrayList<Integer> productQuantity;
+       private ArrayList<Integer> productThreshold;
        
        public DatabaseConnection(){	   
     	   productID = new ArrayList<Integer>();
     	   productName = new ArrayList<String>();
-    	   productQuantity = new ArrayList<Integer>();   
+    	   productQuantity = new ArrayList<Integer>();
+    	   productThreshold = new ArrayList<Integer>();
        }
    
        public ArrayList<Integer> getProductID(){
@@ -37,6 +39,9 @@ public class DatabaseConnection {
        }
        public ArrayList<Integer> getProductQuantity(){
     	   return productQuantity;
+       }
+       public ArrayList<Integer> getProductThreshold(){
+    	   return productThreshold;
        }
      
        public void accessDB(){ // Establish the connection to the database
@@ -56,7 +61,7 @@ public class DatabaseConnection {
               System.out.println("Inserting records into table");
               try {
                      stmt = conn.createStatement();
-                     String sql = "INSERT INTO Product VALUES (" + sql7 + ", '" + sql8 + "', " + 0 + ")";
+                     String sql = "INSERT INTO Product VALUES (" + sql7 + ", '" + sql8 + "', " + 0 + ", " + 500 + ")";
                      stmt.executeUpdate(sql);
                      System.out.println("Inserted into tables");
               } catch (SQLException e) {
@@ -69,12 +74,13 @@ public class DatabaseConnection {
     	   //System.out.println("Creating statement...");
     	   try {
     		   stmt = conn.createStatement();
-    		   String sql2 = "SELECT ProductID, ProductName, ProductQuantity FROM Product";
+    		   String sql2 = "SELECT ProductID, ProductName, ProductQuantity, ProductThreshold FROM Product";
     		   ResultSet rs = stmt.executeQuery(sql2);
     		   while (rs.next()){
     			   productID.add(rs.getInt("ProductID"));
     			   productName.add(rs.getString("ProductName"));
     			   productQuantity.add(rs.getInt("ProductQuantity"));
+    			   productThreshold.add(rs.getInt("ProductThreshold"));
     		   }
     		   rs.close();
     	   }catch (SQLException e){
@@ -89,6 +95,21 @@ public class DatabaseConnection {
     	   stmt = conn.createStatement();
     	   String sql3 = "UPDATE Product SET ProductQuantity = " + sql5 + " WHERE ProductID = " + sql4 + "";
     	   stmt.executeUpdate(sql3);
+    	   }catch (SQLException e){
+    		// TODO Auto-generated catch block
+               e.printStackTrace();
+    	   }
+       }
+       
+       public void updateDBThreshold(int sql6, int sql7){ // Update an entry in a particular row in the database
+    	   System.out.println("Creating statement...");
+    	   try {
+    	   stmt = conn.createStatement();
+    	   System.out.println("said that");
+    	   String sql8 = "UPDATE Product SET ProductThreshold = " + sql7 + " WHERE ProductID = " + sql6 + "";
+    	   System.out.println("i would");
+    	   stmt.executeUpdate(sql8);
+    	   System.out.println("ride for");
     	   }catch (SQLException e){
     		// TODO Auto-generated catch block
                e.printStackTrace();
