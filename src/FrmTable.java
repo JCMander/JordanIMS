@@ -1,8 +1,10 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JFrame;
@@ -14,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 public class FrmTable extends JFrame{
@@ -42,8 +45,14 @@ public class FrmTable extends JFrame{
 
     private void createGUI() {
     	
+    	try{
+    		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	
     	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	this.setPreferredSize(getMaximumSize());;
+    	this.setPreferredSize(new Dimension(700,600));;
     	
     	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");    
 		Date date = new Date();
@@ -73,6 +82,7 @@ public class FrmTable extends JFrame{
         JMenuItem makeOrder = new JMenuItem("Generate Purchase Order");
         saveemenu.add(saveReport);
         saveemenu.add(makeOrder);
+        JMenuItem refreshTable = new JMenuItem("Refresh Table");
         southPanel.add(simTime);
         add(pane,BorderLayout.CENTER);
         add(menubar, BorderLayout.NORTH);
@@ -135,7 +145,6 @@ public class FrmTable extends JFrame{
         		al.generatePurchaseOrder();
         	}
         });
-        
         table.setModel(tableModel);
         table.getTableHeader().setReorderingAllowed(false);
     }

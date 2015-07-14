@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Random;
 
 /** Class used to access, CRUD and close the database
  * Also used to convert the database into a number of ArrayLists **/
@@ -16,7 +15,6 @@ public class DatabaseConnection {
        static final String DB_URL = "jdbc:mysql://10.50.15.27:3306/mydb";
        static final String USER = "JM";
        static final String PASS = "root"; 
-       private Random rnd;
        private Statement stmt;
        private Connection conn;
        private ArrayList<Integer> productID;
@@ -110,18 +108,6 @@ public class DatabaseConnection {
     	   System.out.println("i would");
     	   stmt.executeUpdate(sql8);
     	   System.out.println("ride for");
-    	   }catch (SQLException e){
-    		// TODO Auto-generated catch block
-               e.printStackTrace();
-    	   }
-       }
-       
-       public void deleteRow(){ // Delete a row in the database
-    	   System.out.println("Creating statement...");
-    	   try {
-    	   stmt = conn.createStatement();
-    	   String sql6 = "DELETE FROM Product WHERE ProductID = 9" ;
-    	   stmt.executeUpdate(sql6);
     	   }catch (SQLException e){
     		// TODO Auto-generated catch block
                e.printStackTrace();

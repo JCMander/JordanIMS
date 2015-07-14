@@ -129,7 +129,7 @@ public class SimulationGUI extends Application {
         series9.setName(nameArray[8]);  
         series10.setName(nameArray[9]);  
         
-    	for(int i=0;i<10;i++){
+    	for(int i=0;i<20;i++){
 	        switch(i){
 	        case 0: 
 		        series1.getData().add(new XYChart.Data(count,quantityArray[i]));
@@ -205,7 +205,7 @@ public class SimulationGUI extends Application {
     	        case 9: 
     		        series10.getData().add(new XYChart.Data(count,quantityArray[i]));
     	        	quantityArray[i]-=rnd.nextInt(200);
-    		        break;  
+    		        break; 
     	        }
     		}
     	}
