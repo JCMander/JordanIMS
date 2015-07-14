@@ -136,7 +136,6 @@ public class FrmTable extends JFrame{
         	@Override
         	public void actionPerformed(ActionEvent e){
         		al.generateStockReport();
-        		System.out.println("Fantastic");
         	}
         });
         makeOrder.addActionListener(new ActionListener(){
