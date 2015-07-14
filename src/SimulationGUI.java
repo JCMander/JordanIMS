@@ -1,22 +1,16 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.JOptionPane;
-
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
  
 public class SimulationGUI extends Application {
@@ -24,6 +18,7 @@ public class SimulationGUI extends Application {
     private static ArrayList<String> productName;
     private static ArrayList<Integer> productQuantity;
     private static ArrayList<Integer> productThreshold;
+    private static ArrayList<Integer> productWeight;
     private static DatabaseConnection db;
 	private Random rnd;
 	private int count = 0;
@@ -33,6 +28,9 @@ public class SimulationGUI extends Application {
 	private int quantitySwap;
 	private int thresholdSwap;
 	private String nameSwap;
+	private int[] weightArray;
+	private int weightSwap;
+	private int[] incrementArray;
 	XYChart.Series series1 = new XYChart.Series();
 	XYChart.Series series2 = new XYChart.Series();
 	XYChart.Series series3 = new XYChart.Series();
@@ -41,20 +39,20 @@ public class SimulationGUI extends Application {
 	XYChart.Series series6 = new XYChart.Series();
 	XYChart.Series series7 = new XYChart.Series();
 	XYChart.Series series8 = new XYChart.Series();
-	XYChart.Series series9 = new XYChart.Series();
-	XYChart.Series series10 = new XYChart.Series();
 
 	@Override public void start(Stage stage) {
 		db = new DatabaseConnection();
+		rnd = new Random();
 		
 		db.accessDB();
-		db.readDB();
+		db.readDB();		
 		
 		productID = db.getProductID();
 		productName = db.getProductName();
 		productQuantity = db.getProductQuantity();
 		productThreshold = db.getProductThreshold();
-		
+		productWeight = db.getProductWeight();
+
         stage.setTitle("Line Chart Sample");
         final NumberAxis xAxis = new NumberAxis();
         final NumberAxis yAxis = new NumberAxis();
@@ -68,7 +66,9 @@ public class SimulationGUI extends Application {
         rnd = new Random();
         initialiseData();
         sortData();
+        calculateIncrement();
         addData();
+
         
         Scene scene  = new Scene(lineChart, 1000,750);       
         scene.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
@@ -78,10 +78,9 @@ public class SimulationGUI extends Application {
             }
         });
         
-        lineChart.getData().addAll(series1, series2, series3, series4, series5, series6, series7, series8, series9, series10);
+        lineChart.getData().addAll(series1, series2, series3, series4, series5, series6, series7, series8);
         stage.setScene(scene);
-        stage.show();
-        
+        stage.show();        
     }
 	
 
@@ -90,10 +89,12 @@ public class SimulationGUI extends Application {
 		quantityArray = new int[productID.size()];
 		thresholdArray = new int[productID.size()];
 		nameArray = new String[productID.size()];
+		weightArray = new int[productWeight.size()];
 		for(int i =0; i<productID.size(); i++){
 			quantityArray[i] = productQuantity.get(i);
 			thresholdArray[i] = productThreshold.get(i);
 			nameArray[i] = productName.get(i);
+			weightArray[i] = productWeight.get(i);
 		}		
 	}
 	
@@ -104,16 +105,25 @@ public class SimulationGUI extends Application {
 					quantitySwap = quantityArray[j];
 					nameSwap = nameArray[j];
 					thresholdSwap = thresholdArray[j];
+					weightSwap = weightArray[j];
 					quantityArray[j] = quantityArray[j+1];
 					nameArray[j] = nameArray[j+1];
 					thresholdArray[j] = thresholdArray[j+1];
+					weightArray[j] = weightArray[j+1];
 					quantityArray[j+1] = quantitySwap;
 					nameArray[j+1] = nameSwap;
 					thresholdArray[j+1] = thresholdSwap;
+					weightArray[j+1] = weightSwap;
 				}
 			}
+		}		
+	}
+	
+	public void calculateIncrement(){
+		incrementArray = new int[productID.size()];
+		for(int i =0; i<productID.size(); i++){
+			incrementArray[i] = 10 + ((weightArray[i] * weightArray[i]) * (rnd.nextInt(10) + 5)) ;
 		}
-		
 	}
 	
 	public void addData(){       
@@ -126,9 +136,7 @@ public class SimulationGUI extends Application {
         series6.setName(nameArray[5]);  
         series7.setName(nameArray[6]);  
         series8.setName(nameArray[7]);  
-        series9.setName(nameArray[8]);  
-        series10.setName(nameArray[9]);  
-        
+
     	for(int i=0;i<20;i++){
 	        switch(i){
 	        case 0: 
@@ -154,64 +162,49 @@ public class SimulationGUI extends Application {
 		        break;
 	        case 7: 
 		        series8.getData().add(new XYChart.Data(count,quantityArray[i]));
-		        break;
-	        case 8: 
-		        series9.getData().add(new XYChart.Data(count,quantityArray[i]));
-		        break;
-	        case 9: 
-		        series10.getData().add(new XYChart.Data(count,quantityArray[i]));
-		        break;  
+		        break; 
 	        }
-        	quantityArray[i]-=rnd.nextInt(200);
+        	quantityArray[i]-=rnd.nextInt(incrementArray[i]);
     		if(quantityArray[i]<=thresholdArray[i]){
     	        quantityArray[i]=2000;
     	        switch(i){
     	        case 0: 
     		        series1.getData().add(new XYChart.Data(count,quantityArray[i]));
-    	        	quantityArray[i]-=rnd.nextInt(200);
+    	        	quantityArray[i]-=rnd.nextInt(incrementArray[i]);
     		        break;
     	        case 1: 
     		        series2.getData().add(new XYChart.Data(count,quantityArray[i]));
-    	        	quantityArray[i]-=rnd.nextInt(200);
+    	        	quantityArray[i]-=rnd.nextInt(incrementArray[i]);
     		        break;
     	        case 2: 
     		        series3.getData().add(new XYChart.Data(count,quantityArray[i]));
-    	        	quantityArray[i]-=rnd.nextInt(200);
+    	        	quantityArray[i]-=rnd.nextInt(incrementArray[i]);
     		        break;
     	        case 3: 
     		        series4.getData().add(new XYChart.Data(count,quantityArray[i]));
-    	        	quantityArray[i]-=rnd.nextInt(200);
+    	        	quantityArray[i]-=rnd.nextInt(incrementArray[i]);
     		        break;
     	        case 4: 
     		        series5.getData().add(new XYChart.Data(count,quantityArray[i]));
-    	        	quantityArray[i]-=rnd.nextInt(200);
+    	        	quantityArray[i]-=rnd.nextInt(incrementArray[i]);
     		        break;  
     	        case 5: 
     		        series6.getData().add(new XYChart.Data(count,quantityArray[i]));
-    	        	quantityArray[i]-=rnd.nextInt(200);
+    	        	quantityArray[i]-=rnd.nextInt(incrementArray[i]);
     		        break;
     	        case 6: 
     		        series7.getData().add(new XYChart.Data(count,quantityArray[i]));
-    	        	quantityArray[i]-=rnd.nextInt(200);
+    	        	quantityArray[i]-=rnd.nextInt(incrementArray[i]);
     		        break;
     	        case 7: 
     		        series8.getData().add(new XYChart.Data(count,quantityArray[i]));
-    	        	quantityArray[i]-=rnd.nextInt(200);
+    	        	quantityArray[i]-=rnd.nextInt(incrementArray[i]);
     		        break;
-    	        case 8: 
-    		        series9.getData().add(new XYChart.Data(count,quantityArray[i]));
-    	        	quantityArray[i]-=rnd.nextInt(200);
-    		        break;
-    	        case 9: 
-    		        series10.getData().add(new XYChart.Data(count,quantityArray[i]));
-    	        	quantityArray[i]-=rnd.nextInt(200);
-    		        break; 
     	        }
     		}
     	}
-
        count++; 		
-        
-	}
+	}	
+	
 	
 }

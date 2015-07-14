@@ -21,12 +21,15 @@ public class DatabaseConnection {
        private ArrayList<String> productName;
        private ArrayList<Integer> productQuantity;
        private ArrayList<Integer> productThreshold;
+       private ArrayList<Integer> productWeight;
+
        
        public DatabaseConnection(){	   
     	   productID = new ArrayList<Integer>();
     	   productName = new ArrayList<String>();
     	   productQuantity = new ArrayList<Integer>();
     	   productThreshold = new ArrayList<Integer>();
+    	   productWeight = new ArrayList<Integer>();
        }
    
        public ArrayList<Integer> getProductID(){
@@ -40,6 +43,9 @@ public class DatabaseConnection {
        }
        public ArrayList<Integer> getProductThreshold(){
     	   return productThreshold;
+       }
+       public ArrayList<Integer> getProductWeight(){
+    	   return productWeight;
        }
      
        public void accessDB(){ // Establish the connection to the database
@@ -56,10 +62,9 @@ public class DatabaseConnection {
        }
 
        public void createEntry(int sql7, String sql8){ // Add a row to the database
-              System.out.println("Inserting records into table");
               try {
                      stmt = conn.createStatement();
-                     String sql = "INSERT INTO Product VALUES (" + sql7 + ", '" + sql8 + "', " + 0 + ", " + 500 + ")";
+                     String sql = "INSERT INTO Product VALUES (" + sql7 + ", '" + sql8 + "', " + 0 + ", " + 500 + ", " + 1 + ")";
                      stmt.executeUpdate(sql);
                      System.out.println("Inserted into tables");
               } catch (SQLException e) {
@@ -72,13 +77,14 @@ public class DatabaseConnection {
     	   //System.out.println("Creating statement...");
     	   try {
     		   stmt = conn.createStatement();
-    		   String sql2 = "SELECT ProductID, ProductName, ProductQuantity, ProductThreshold FROM Product";
+    		   String sql2 = "SELECT ProductID, ProductName, ProductQuantity, ProductThreshold, ProductWeight FROM Product";
     		   ResultSet rs = stmt.executeQuery(sql2);
     		   while (rs.next()){
     			   productID.add(rs.getInt("ProductID"));
     			   productName.add(rs.getString("ProductName"));
     			   productQuantity.add(rs.getInt("ProductQuantity"));
     			   productThreshold.add(rs.getInt("ProductThreshold"));
+    			   productWeight.add(rs.getInt("ProductWeight"));
     		   }
     		   rs.close();
     	   }catch (SQLException e){
@@ -88,7 +94,6 @@ public class DatabaseConnection {
        }
        
        public void updateDB(int sql4, int sql5){ // Update an entry in a particular row in the database
-    	   System.out.println("Creating statement...");
     	   try {
     	   stmt = conn.createStatement();
     	   String sql3 = "UPDATE Product SET ProductQuantity = " + sql5 + " WHERE ProductID = " + sql4 + "";
@@ -99,15 +104,23 @@ public class DatabaseConnection {
     	   }
        }
        
-       public void updateDBThreshold(int sql6, int sql7){ // Update an entry in a particular row in the database
-    	   System.out.println("Creating statement...");
+       
+       public void updateWeight(int sql2, int sql4){ // Update an entry in a particular row in the database
     	   try {
     	   stmt = conn.createStatement();
-    	   System.out.println("said that");
+    	   String sql3 = "UPDATE Product SET ProductWeight = " + sql4 + " WHERE ProductID = " + sql2 + "";
+    	   stmt.executeUpdate(sql3);
+    	   }catch (SQLException e){
+    		// TODO Auto-generated catch block
+               e.printStackTrace();
+    	   }
+       }
+       
+       public void updateDBThreshold(int sql6, int sql7){ // Update an entry in a particular row in the database
+    	   try {
+    	   stmt = conn.createStatement();
     	   String sql8 = "UPDATE Product SET ProductThreshold = " + sql7 + " WHERE ProductID = " + sql6 + "";
-    	   System.out.println("i would");
     	   stmt.executeUpdate(sql8);
-    	   System.out.println("ride for");
     	   }catch (SQLException e){
     		// TODO Auto-generated catch block
                e.printStackTrace();
