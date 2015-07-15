@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Random;
 
 /** Class used to access, CRUD and close the database
  * Also used to convert the database into a number of ArrayLists **/
@@ -22,14 +23,18 @@ public class DatabaseConnection {
        private ArrayList<Integer> productQuantity;
        private ArrayList<Integer> productThreshold;
        private ArrayList<Integer> productWeight;
+       private ArrayList<Integer> productPrice;
+       private Random rnd;
 
        
        public DatabaseConnection(){	   
+    	   rnd = new Random();
     	   productID = new ArrayList<Integer>();
     	   productName = new ArrayList<String>();
     	   productQuantity = new ArrayList<Integer>();
     	   productThreshold = new ArrayList<Integer>();
     	   productWeight = new ArrayList<Integer>();
+    	   productPrice = new ArrayList<Integer>();
        }
    
        public ArrayList<Integer> getProductID(){
@@ -46,6 +51,9 @@ public class DatabaseConnection {
        }
        public ArrayList<Integer> getProductWeight(){
     	   return productWeight;
+       }
+       public ArrayList<Integer> getProductPrice(){
+    	   return productPrice;
        }
      
        public void accessDB(){ // Establish the connection to the database
@@ -64,9 +72,8 @@ public class DatabaseConnection {
        public void createEntry(int sql7, String sql8){ // Add a row to the database
               try {
                      stmt = conn.createStatement();
-                     String sql = "INSERT INTO Product VALUES (" + sql7 + ", '" + sql8 + "', " + 0 + ", " + 500 + ", " + 1 + ")";
+                     String sql = "INSERT INTO Product VALUES (" + sql7 + ", '" + sql8 + "', " + 0 + ", " + 500 + ", " + 1 + ", " + rnd.nextInt(100) + ")";
                      stmt.executeUpdate(sql);
-                     System.out.println("Inserted into tables");
               } catch (SQLException e) {
                      // TODO Auto-generated catch block
                      e.printStackTrace();
@@ -77,7 +84,7 @@ public class DatabaseConnection {
     	   //System.out.println("Creating statement...");
     	   try {
     		   stmt = conn.createStatement();
-    		   String sql2 = "SELECT ProductID, ProductName, ProductQuantity, ProductThreshold, ProductWeight FROM Product";
+    		   String sql2 = "SELECT ProductID, ProductName, ProductQuantity, ProductThreshold, ProductWeight, ProductPrice FROM Product";
     		   ResultSet rs = stmt.executeQuery(sql2);
     		   while (rs.next()){
     			   productID.add(rs.getInt("ProductID"));
@@ -85,6 +92,7 @@ public class DatabaseConnection {
     			   productQuantity.add(rs.getInt("ProductQuantity"));
     			   productThreshold.add(rs.getInt("ProductThreshold"));
     			   productWeight.add(rs.getInt("ProductWeight"));
+    			   productPrice.add(rs.getInt("ProductPrice"));
     		   }
     		   rs.close();
     	   }catch (SQLException e){
@@ -140,6 +148,7 @@ public class DatabaseConnection {
     	   }
     	   System.out.println("Goodbye!");
        }
+
        
        
        }

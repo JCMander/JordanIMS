@@ -20,6 +20,7 @@ public class SimulationGUI extends Application {
     private static ArrayList<Integer> productThreshold;
     private static ArrayList<Integer> productWeight;
     private static DatabaseConnection db;
+    private static FrmTable frm;
 	private Random rnd;
 	private int count = 0;
 	private int[] quantityArray;
@@ -31,6 +32,8 @@ public class SimulationGUI extends Application {
 	private int[] weightArray;
 	private int weightSwap;
 	private int[] incrementArray;
+	private int[] idArray;
+	private int idSwap;
 	XYChart.Series series1 = new XYChart.Series();
 	XYChart.Series series2 = new XYChart.Series();
 	XYChart.Series series3 = new XYChart.Series();
@@ -67,6 +70,14 @@ public class SimulationGUI extends Application {
         initialiseData();
         sortData();
         calculateIncrement();
+        series1.setName(nameArray[0]);  
+        series2.setName(nameArray[1]);  
+        series3.setName(nameArray[2]);  
+        series4.setName(nameArray[3]);  
+        series5.setName(nameArray[4]);  
+        series6.setName(nameArray[5]);  
+        series7.setName(nameArray[6]);  
+        series8.setName(nameArray[7]);  
         addData();
 
         
@@ -89,12 +100,14 @@ public class SimulationGUI extends Application {
 		quantityArray = new int[productID.size()];
 		thresholdArray = new int[productID.size()];
 		nameArray = new String[productID.size()];
-		weightArray = new int[productWeight.size()];
+		weightArray = new int[productID.size()];
+		idArray = new int[productID.size()];
 		for(int i =0; i<productID.size(); i++){
 			quantityArray[i] = productQuantity.get(i);
 			thresholdArray[i] = productThreshold.get(i);
 			nameArray[i] = productName.get(i);
 			weightArray[i] = productWeight.get(i);
+			idArray[i] = productID.get(i);
 		}		
 	}
 	
@@ -106,14 +119,17 @@ public class SimulationGUI extends Application {
 					nameSwap = nameArray[j];
 					thresholdSwap = thresholdArray[j];
 					weightSwap = weightArray[j];
+					idSwap = idArray[j];
 					quantityArray[j] = quantityArray[j+1];
 					nameArray[j] = nameArray[j+1];
 					thresholdArray[j] = thresholdArray[j+1];
 					weightArray[j] = weightArray[j+1];
+					idArray[j] = idArray[j+1];
 					quantityArray[j+1] = quantitySwap;
 					nameArray[j+1] = nameSwap;
 					thresholdArray[j+1] = thresholdSwap;
 					weightArray[j+1] = weightSwap;
+					idArray[j+1] = idSwap;
 				}
 			}
 		}		
@@ -128,15 +144,6 @@ public class SimulationGUI extends Application {
 	
 	public void addData(){       
 		
-        series1.setName(nameArray[0]);  
-        series2.setName(nameArray[1]);  
-        series3.setName(nameArray[2]);  
-        series4.setName(nameArray[3]);  
-        series5.setName(nameArray[4]);  
-        series6.setName(nameArray[5]);  
-        series7.setName(nameArray[6]);  
-        series8.setName(nameArray[7]);  
-
     	for(int i=0;i<20;i++){
 	        switch(i){
 	        case 0: 
@@ -166,7 +173,7 @@ public class SimulationGUI extends Application {
 	        }
         	quantityArray[i]-=rnd.nextInt(incrementArray[i]);
     		if(quantityArray[i]<=thresholdArray[i]){
-    	        quantityArray[i]=2000;
+    	        quantityArray[i]=AppLoader.maxStock;
     	        switch(i){
     	        case 0: 
     		        series1.getData().add(new XYChart.Data(count,quantityArray[i]));
@@ -204,7 +211,10 @@ public class SimulationGUI extends Application {
     		}
     	}
        count++; 		
+   	
 	}	
+	
+
 	
 	
 }

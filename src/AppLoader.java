@@ -1,18 +1,7 @@
-import java.awt.Font;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Random;
-import java.util.Scanner;
-
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 
 
 public class AppLoader {
@@ -25,10 +14,14 @@ public class AppLoader {
     private static ArrayList<String> productName;
     private static ArrayList<Integer> productQuantity;
     private static ArrayList<Integer> productThreshold;
-    private static String report = "";
-    private static File reportFile = new File ("../reportfile");
+    private static ArrayList<Integer> productWeight;
     private static String stockListMessage = "";
-    private String fileDate;
+    private static String[] options = new String[2];
+    private static int viewReceipt;
+    private static int weightedQuantity;
+    private static int weightEquation;
+    static int maxStock = 2000;
+
     
 	public static void main(String[] args) {
 		
@@ -40,98 +33,69 @@ public class AppLoader {
         frm.setLocationRelativeTo(null);
 		db.accessDB();
 		db.readDB();
-					
-		productID = db.getProductID();
-		productName = db.getProductName();
-		productQuantity = db.getProductQuantity();
-		productThreshold = db.getProductThreshold();
 
+		productID = db.getProductID();
+		productWeight = db.getProductWeight();
+		productQuantity = db.getProductQuantity();
+		productName = db.getProductName();
+		productThreshold = db.getProductThreshold();
+		
         frm.setVisible(true);	
-        makeTable();
-						
+		po = new PurchaseOrder();		
+		makeTable();
+		for(int i =0; i<productID.size(); i++){
+			weightEquation = (10 + ((productWeight.get(i) * productWeight.get(i)) * (rnd.nextInt(10) + 5)));
+			if((productQuantity.get(i) - weightEquation) < 0){
+			weightedQuantity = 0 ;
+			}else if((productQuantity.get(i) - weightEquation) >= 0){
+				weightedQuantity = productQuantity.get(i) - weightEquation ;
+			}
+		if(productQuantity.get(i) <= productThreshold.get(i)){
+			db.updateDB(productID.get(i), maxStock);
+		}else{
+			db.updateDB(productID.get(i), weightedQuantity);
+		}
+	}			
 	}
 
+	
 	public static void stockListMessage(){
+	    options[0] = new String("OK");
+	    options[1] = new String("View Receipt");
 		/** Message to show when quantity is low code starts here**/
 		int msgcount =0;
 		for(int i=0; i<productID.size(); i++){
 			if(productQuantity.get(i)<=productThreshold.get(i)){
 				stockListMessage = stockListMessage +  productName.get(i) + "      Quantity: " + productQuantity.get(i) + "\n";
 				msgcount++;
+				db.updateDB(productID.get(i), maxStock);
 			}
 		}
 		if(msgcount>0){
-			JOptionPane.showMessageDialog(null, "The following products are low in quantity:\n\n" + stockListMessage);
+		    viewReceipt = JOptionPane.showOptionDialog(null, "The following products are low in quantity and so have been re-ordered:\n\n" + stockListMessage,"Low Stock Levels", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
 		}
+		
+		if(viewReceipt == 1){
+				try {
+					 
+					if ((new File(StockReport.FILE)).exists()) {
+			 
+						Process p = Runtime
+						   .getRuntime()
+						   .exec("rundll32 url.dll,FileProtocolHandler " + PurchaseOrder.FILE);
+						p.waitFor();
+			 
+					} else {
+			 
+					    JOptionPane.showMessageDialog(null, "This file does not exist");
+			 
+					}			 
+			  	  } catch (Exception ex) {
+					ex.printStackTrace();
+				  }
+         
+		}		
 		/** Message to show when quantity is low code ends here **/
-	}
-	
-	public void generateStockReport(){
-		DateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy");    
-		Date date = new Date();
-		fileDate = dateFormat.format(date);
-		System.out.println(dateFormat.format(date));
-		/** File saving code begins here **/
-		//System.out.println(report);
-			report += "\t\t\t" + date + "\r\n";
-			report += "\r\nProduct ID\tProduct Name\tProduct Quantity\tReorder? (y/n) \r\n";
-		for(int i=0; i<productID.size();i++){
-			
-			if((productName.get(i)).length()>15){
-				if(productQuantity.get(i)>50){
-					report += productID.get(i) + "\t\t" + productName.get(i) + "\t" + productQuantity.get(i) + "\t\t\t n \r\n";
-					//System.out.println(productID.size());
-					}else{
-						report += productID.get(i) + "\t\t" + productName.get(i) + "\t" + productQuantity.get(i) + "\t\t\t y \r\n";
-						}
-			}else{
-				if(productQuantity.get(i)>50){
-					report += productID.get(i) + "\t\t" + productName.get(i) + "\t\t" + productQuantity.get(i) + "\t\t\t n \r\n";
-					//System.out.println(productID.size());
-					}else{
-						report += productID.get(i) + "\t\t" + productName.get(i) + "\t\t" + productQuantity.get(i) + "\t\t\t y \r\n";
-						}
-			}
-			
-			
-		}
-		//System.out.println(report);
-		try {
-			FileWriter fw = new FileWriter(reportFile + fileDate + ".txt");
-			fw.write(report);
-			fw.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		JOptionPane.showMessageDialog(null, "Your stock report has been saved");
-		try {
-			Runtime.getRuntime().exec("notepad " + reportFile + fileDate + ".txt");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		/** File saving code ends here **/
-	}
-	
-	public void generatePurchaseOrder(){
-		
-		productID = db.getProductID();
-		productName = db.getProductName();
-		productQuantity = db.getProductQuantity();
-		productThreshold = db.getProductThreshold();
-		
-		for(int i=0; i<productID.size(); i++){
-			po.addProductToOrder(productID.get(i), productName.get(i), productQuantity.get(i));
-		}
-		
-		po.addTotalPrice();
-		po.pack();
-        po.setLocationRelativeTo(null);
-        po.setVisible(true); 
-
 	}
 	
 	public static void makeTable(){
@@ -153,7 +117,6 @@ public class AppLoader {
 	}
 	
 	public void updateThreshold(int id, int threshold){
- 	   System.out.println("here with" + id + ":" + threshold);
 		db.updateDBThreshold(id, threshold);
 	}
 	
