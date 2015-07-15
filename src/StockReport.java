@@ -31,7 +31,7 @@ public class StockReport {
 	static DateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy");    
 	static Date date = new Date();
 	static String fileDate = dateFormat.format(date);
-	static String FILE = fileDate + "StockReport.pdf";
+	static String FILE = "C:\\Users\\jmander\\Desktop" + fileDate + "StockReport.pdf";
   private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
       Font.BOLD);
   private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
