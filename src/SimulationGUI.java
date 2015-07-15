@@ -13,6 +13,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
  
+/** Class used to create a simulation of product sales over a given time **/
+
 public class SimulationGUI extends Application {
 	private static ArrayList<Integer> productID;
     private static ArrayList<String> productName;

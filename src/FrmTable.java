@@ -18,6 +18,8 @@ import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
+/** Class used to create the GUI **/
+
 public class FrmTable extends JFrame{
     private JTable table;
     private DefaultTableModel tableModel;
@@ -118,7 +120,7 @@ public class FrmTable extends JFrame{
             	Thread ui = new Thread(new Runnable(){
                     @Override
                     public void run(){
-                    //SimulationGUI.launch(SimulationGUI.class);
+                    SimulationGUI.launch(SimulationGUI.class);
                     }
               
               });

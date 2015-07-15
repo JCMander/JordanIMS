@@ -19,6 +19,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+/** Class used to create the purchase orders **/
 
 public class PurchaseOrder {
 	private static DatabaseConnection db;

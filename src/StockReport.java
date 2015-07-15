@@ -20,6 +20,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+/** Class used to create the stock reports **/
 
 public class StockReport {
 	private static ArrayList<Integer> productID;
