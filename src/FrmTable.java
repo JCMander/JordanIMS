@@ -118,7 +118,7 @@ public class FrmTable extends JFrame{
             	Thread ui = new Thread(new Runnable(){
                     @Override
                     public void run(){
-                    SimulationGUI.launch(SimulationGUI.class);
+                    //SimulationGUI.launch(SimulationGUI.class);
                     }
               
               });
