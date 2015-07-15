@@ -10,11 +10,11 @@ public class AppLoader {
 	private static FrmTable frm;
 	private static PurchaseOrder po;
 	private static Random rnd;
-	private static ArrayList<Integer> productID;
-    private static ArrayList<String> productName;
-    private static ArrayList<Integer> productQuantity;
-    private static ArrayList<Integer> productThreshold;
-    private static ArrayList<Integer> productWeight;
+	static ArrayList<Integer> productID;
+    static ArrayList<String> productName;
+    static ArrayList<Integer> productQuantity;
+    static ArrayList<Integer> productThreshold;
+    static ArrayList<Integer> productWeight;
     private static String stockListMessage = "";
     private static String[] options = new String[2];
     private static int viewReceipt;

@@ -22,7 +22,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 
 public class StockReport {
-	private static DatabaseConnection db;
 	private static ArrayList<Integer> productID;
     private static ArrayList<String> productName;
     private static ArrayList<Integer> productQuantity;
@@ -42,15 +41,12 @@ public class StockReport {
 
   
   public StockReport(){
-		db = new DatabaseConnection();
-		db.accessDB();
-		db.readDB();
 					
-		productID = db.getProductID();
-		productName = db.getProductName();
-		productQuantity = db.getProductQuantity();
-		productThreshold = db.getProductThreshold();
-		productWeight = db.getProductWeight();
+		productID = AppLoader.productID;
+		productName = AppLoader.productName;
+		productQuantity = AppLoader.productQuantity;
+		productThreshold = AppLoader.productThreshold;
+		productWeight = AppLoader.productWeight;
 	  
 	  try {
 	      Document document = new Document();
