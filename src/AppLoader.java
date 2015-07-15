@@ -9,7 +9,7 @@ public class AppLoader {
 
 	private static DatabaseConnection db;
 	private static FrmTable frm;
-	private static PurchaseOrder po;
+	//private static PurchaseOrder po;
 	private static Random rnd;
 	static ArrayList<Integer> productID;
     static ArrayList<String> productName;
@@ -29,7 +29,7 @@ public class AppLoader {
 		rnd = new Random();
 		db = new DatabaseConnection();
 		frm = new FrmTable();
-		po = new PurchaseOrder();
+		//po = new PurchaseOrder();
 		frm.pack();
         frm.setLocationRelativeTo(null);
 		db.accessDB();
@@ -93,9 +93,9 @@ public class AppLoader {
 					}			 
 			  	  } catch (Exception ex) {
 					ex.printStackTrace();
-				  }
+					}
          
-		}		*/
+		}*/
 		/** Message to show when quantity is low code ends here **/
 	}
 	
