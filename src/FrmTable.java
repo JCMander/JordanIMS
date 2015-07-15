@@ -26,7 +26,7 @@ public class FrmTable extends JFrame{
     private int count = 0;
     private String newProductName;
     private static AppLoader al;
-    //private static StockReport sr;
+    private static StockReport sr;
     private JLabel simTime;
     private int confirmProductName;
 	private int userinput1;
@@ -134,8 +134,8 @@ public class FrmTable extends JFrame{
         	    options[0] = new String("OK");
         	    options[1] = new String("View Report");
     		    viewReport = JOptionPane.showOptionDialog(null, "Stock report saved","Low Stock Levels", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
-        		//sr = new StockReport();
-        		/*if(viewReport == 1){
+        		sr = new StockReport();
+        		if(viewReport == 1){
 					try {
 						 
 						if ((new File(StockReport.FILE)).exists()) {
@@ -154,7 +154,7 @@ public class FrmTable extends JFrame{
 				  	  } catch (Exception ex) {
 						ex.printStackTrace();
 					  }
-        		}*/
+        		}
         	}
         });
         table.setModel(tableModel);

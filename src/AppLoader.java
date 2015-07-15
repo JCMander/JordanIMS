@@ -9,7 +9,7 @@ public class AppLoader {
 
 	private static DatabaseConnection db;
 	private static FrmTable frm;
-	//private static PurchaseOrder po;
+	private static PurchaseOrder po;
 	private static Random rnd;
 	static ArrayList<Integer> productID;
     static ArrayList<String> productName;
@@ -42,7 +42,7 @@ public class AppLoader {
 		productThreshold = db.getProductThreshold();
 		
         frm.setVisible(true);	
-		//po = new PurchaseOrder();		
+		po = new PurchaseOrder();		
 		makeTable();
 		for(int i =0; i<productID.size(); i++){
 			weightEquation = (10 + ((productWeight.get(i) * productWeight.get(i)) * (rnd.nextInt(10) + 5)));
@@ -76,7 +76,7 @@ public class AppLoader {
 		    viewReceipt = JOptionPane.showOptionDialog(null, "The following products are low in quantity and so have been re-ordered:\n\n" + stockListMessage,"Low Stock Levels", 0,JOptionPane.INFORMATION_MESSAGE,null,options,null);
 		}
 		
-		/*if(viewReceipt == 1){
+		if(viewReceipt == 1){
 				try {
 					 
 					if ((new File(StockReport.FILE)).exists()) {
@@ -95,7 +95,7 @@ public class AppLoader {
 					ex.printStackTrace();
 					}
          
-		}*/
+		}
 		/** Message to show when quantity is low code ends here **/
 	}
 	
