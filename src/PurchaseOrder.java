@@ -32,7 +32,7 @@ public class PurchaseOrder {
 	static DateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy");    
 	static Date date = new Date();
 	static String fileDate = dateFormat.format(date);
-  static String FILE = "C:\\Users\\jmander\\Desktop" + fileDate + "PurchaseOrder.pdf";
+  static String FILE = fileDate + "PurchaseOrder.pdf";
   private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
       Font.BOLD);
   private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
@@ -151,10 +151,10 @@ public class PurchaseOrder {
 		if(productQuantity.get(i)<productThreshold.get(i)){
 			table.addCell(Integer.toString(productID.get(i)));
 	    	table.addCell(productName.get(i));
-	    	table.addCell(Integer.toString (AppLoader.maxStock - (productQuantity.get(i))));
+	    	table.addCell(Integer.toString (AppLoader.maxStock[i] - (productQuantity.get(i))));
 	    	table.addCell("£" + Integer.toString(productPrice.get(i)) + ".00");
-	    	table.addCell("£" + Integer.toString(productPrice.get(i) * ((AppLoader.maxStock - (productQuantity.get(i))))) + ".00");
-	    	totalPrice+=(productPrice.get(i) * ((AppLoader.maxStock - (productQuantity.get(i)))));
+	    	table.addCell("£" + Integer.toString(productPrice.get(i) * ((AppLoader.maxStock[i] - (productQuantity.get(i))))) + ".00");
+	    	totalPrice+=(productPrice.get(i) * ((AppLoader.maxStock[i] - (productQuantity.get(i)))));
 		}
 	}
 	

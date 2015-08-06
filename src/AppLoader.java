@@ -21,7 +21,7 @@ public class AppLoader {
     private static int viewReceipt;
     private static int weightedQuantity;
     private static int weightEquation;
-    static int maxStock = 2000;
+    static int[] maxStock;
 
     
 	public static void main(String[] args) {
@@ -29,7 +29,6 @@ public class AppLoader {
 		rnd = new Random();
 		db = new DatabaseConnection();
 		frm = new FrmTable();
-		//po = new PurchaseOrder();
 		frm.pack();
         frm.setLocationRelativeTo(null);
 		db.accessDB();
@@ -41,9 +40,19 @@ public class AppLoader {
 		productName = db.getProductName();
 		productThreshold = db.getProductThreshold();
 		
+		maxStock = new int[productID.size()];
+		for(int i =0; i<productID.size(); i++){
+			maxStock[i] = (productThreshold.get(i)*4);
+		}
+		
         frm.setVisible(true);	
 		po = new PurchaseOrder();		
 		makeTable();
+		addWeek();
+	}
+
+	
+	public static void addWeek(){
 		for(int i =0; i<productID.size(); i++){
 			weightEquation = (10 + ((productWeight.get(i) * productWeight.get(i)) * (rnd.nextInt(10) + 5)));
 			if((productQuantity.get(i) - weightEquation) < 0){
@@ -52,13 +61,12 @@ public class AppLoader {
 				weightedQuantity = productQuantity.get(i) - weightEquation ;
 			}
 		if(productQuantity.get(i) <= productThreshold.get(i)){
-			db.updateDB(productID.get(i), maxStock);
+			db.updateDB(productID.get(i), maxStock[i]);
 		}else{
 			db.updateDB(productID.get(i), weightedQuantity);
 		}
-	}			
 	}
-
+	}
 	
 	public static void stockListMessage(){
 	    options[0] = new String("OK");
@@ -69,7 +77,7 @@ public class AppLoader {
 			if(productQuantity.get(i)<=productThreshold.get(i)){
 				stockListMessage = stockListMessage +  productName.get(i) + "      Quantity: " + productQuantity.get(i) + "\n";
 				msgcount++;
-				db.updateDB(productID.get(i), maxStock);
+				db.updateDB(productID.get(i), maxStock[i]);
 			}
 		}
 		if(msgcount>0){
@@ -79,7 +87,7 @@ public class AppLoader {
 		if(viewReceipt == 1){
 				try {
 					 
-					if ((new File(StockReport.FILE)).exists()) {
+					if ((new File(PurchaseOrder.FILE)).exists()) {
 			 
 						Process p = Runtime
 						   .getRuntime()

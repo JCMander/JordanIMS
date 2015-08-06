@@ -21,8 +21,6 @@ public class SimulationGUI extends Application {
     private static ArrayList<Integer> productQuantity;
     private static ArrayList<Integer> productThreshold;
     private static ArrayList<Integer> productWeight;
-    private static DatabaseConnection db;
-    private static FrmTable frm;
 	private Random rnd;
 	private int count = 0;
 	private int[] quantityArray;
@@ -46,23 +44,21 @@ public class SimulationGUI extends Application {
 	XYChart.Series series8 = new XYChart.Series();
 
 	@Override public void start(Stage stage) {
-		db = new DatabaseConnection();
+
 		rnd = new Random();
+
 		
-		db.accessDB();
-		db.readDB();		
-		
-		productID = db.getProductID();
-		productName = db.getProductName();
-		productQuantity = db.getProductQuantity();
-		productThreshold = db.getProductThreshold();
-		productWeight = db.getProductWeight();
+		productID = AppLoader.productID;
+		productName = AppLoader.productName;
+		productQuantity = AppLoader.productQuantity;
+		productThreshold = AppLoader.productThreshold;
+		productWeight = AppLoader.productWeight;
 
         stage.setTitle("Line Chart Sample");
         final NumberAxis xAxis = new NumberAxis();
         final NumberAxis yAxis = new NumberAxis();
-         xAxis.setLabel("Day");
-         yAxis.setLabel("Stock");
+         xAxis.setLabel("Week");
+         yAxis.setLabel("Stock Level");
         final LineChart<Number, Number> lineChart = 
                 new LineChart<Number,Number>(xAxis,yAxis);
        
@@ -175,7 +171,7 @@ public class SimulationGUI extends Application {
 	        }
         	quantityArray[i]-=rnd.nextInt(incrementArray[i]);
     		if(quantityArray[i]<=thresholdArray[i]){
-    	        quantityArray[i]=AppLoader.maxStock;
+    	        quantityArray[i]=AppLoader.maxStock[i];
     	        switch(i){
     	        case 0: 
     		        series1.getData().add(new XYChart.Data(count,quantityArray[i]));
