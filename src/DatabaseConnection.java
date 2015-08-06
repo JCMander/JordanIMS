@@ -13,7 +13,7 @@ import java.util.Random;
 public class DatabaseConnection {
        
        static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-       static final String DB_URL = "jdbc:mysql://10.50.15.27:3306/mydb";
+       static final String DB_URL = "jdbc:mysql://10.50.15.18:3306/mydb";
        static final String USER = "JM";
        static final String PASS = "root"; 
        private Statement stmt;
