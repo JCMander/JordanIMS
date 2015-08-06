@@ -48,11 +48,11 @@ public class AppLoader {
         frm.setVisible(true);	
 		po = new PurchaseOrder();		
 		makeTable();
-		addWeek();
+		//addWeek();
 	}
 
 	
-	public static void addWeek(){
+	/*public static void addWeek(){
 		for(int i =0; i<productID.size(); i++){
 			weightEquation = (10 + ((productWeight.get(i) * productWeight.get(i)) * (rnd.nextInt(10) + 5)));
 			if((productQuantity.get(i) - weightEquation) < 0){
@@ -66,7 +66,7 @@ public class AppLoader {
 			db.updateDB(productID.get(i), weightedQuantity);
 		}
 	}
-	}
+	}*/
 	
 	public static void stockListMessage(){
 	    options[0] = new String("OK");
