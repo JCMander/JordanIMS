@@ -24,7 +24,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import controllers.AppLoader;
 
-/** Class used to create the purchase orders **/
+/** Class used to create the purchase orders 
+ * This prints the product ID, Name, Purchase quantity and total price per product, as well as a total price at the end
+ * **/
 
 public class PurchaseOrder {
 	private static DatabaseConnection db;
@@ -58,6 +60,8 @@ public class PurchaseOrder {
 		productThreshold = db.getProductThreshold();
 		productPrice = db.getProductPrice();
 	  
+		
+		//Creates the new document
 	  try {
 	      Document document = new Document();
 	      PdfWriter.getInstance(document, new FileOutputStream(getFILE()));
@@ -72,6 +76,7 @@ public class PurchaseOrder {
 	}
   
 
+  //Add the meta data for the document
   private static void addMetaData(Document document) {
     document.addTitle("Stock Report");
     document.addSubject("Using iText");
@@ -79,6 +84,7 @@ public class PurchaseOrder {
     document.addAuthor("Jordan Mander");
   }
 
+  //The first page of the document
   private static void addTitlePage(Document document)
       throws DocumentException {
     Paragraph preface = new Paragraph();
@@ -100,6 +106,7 @@ public class PurchaseOrder {
     document.newPage();
   }
 
+  //The second page of the document (not restricted to one page)
   private static void addContent(Document document) throws DocumentException {
     Anchor anchor = new Anchor("NB Gardens", catFont);
     anchor.setName("NB Gardens");
@@ -128,6 +135,7 @@ public class PurchaseOrder {
     PdfPTable table = new PdfPTable(5);
     Font font = new Font(FontFamily.HELVETICA, 12, Font.BOLD);
     
+    //Adds the titles to the table
     PdfPCell c1 = new PdfPCell(new Phrase("ID", font));
     c1.setHorizontalAlignment(Element.ALIGN_CENTER);
     table.addCell(c1);
@@ -152,6 +160,7 @@ public class PurchaseOrder {
     
     totalPrice =0;
     
+    //Adds the content to the table (ID, Name, Reorder Quantity, Total price per product)
 	for(int i=0; i<productID.size(); i++){
 		if(productQuantity.get(i)<productThreshold.get(i)){
 			table.addCell(Integer.toString(productID.get(i)));
@@ -167,8 +176,11 @@ public class PurchaseOrder {
 	table.addCell("");
 	table.addCell("");
 	table.addCell("");
+	
+	//Adds the total price of the purchase order
 	table.addCell("�" + Integer.toString(totalPrice) + ".00");
 	
+	//adds the table to the content
     subCatPart.add(table);
 
   }

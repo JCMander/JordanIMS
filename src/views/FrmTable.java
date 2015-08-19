@@ -65,17 +65,29 @@ public class FrmTable extends JFrame{
         table = new JTable();
         pane.setViewportView(table);
 
+        /** 
+         * The menubar, including menu items (within menu bar tabs)
+         * **/
+        
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("Product");
         JMenu saveMenu = new JMenu("Reports");
+        JMenu simulationMenu = new JMenu("Simulation");
         menuBar.add(fileMenu);
         menuBar.add(saveMenu);
+        menuBar.add(simulationMenu);
         JMenuItem addProduct = new JMenuItem("Add New Product");
         JMenuItem updateThreshold = new JMenuItem("Update Threshold");
         fileMenu.add(addProduct);
         fileMenu.add(updateThreshold);
         JMenuItem saveReport = new JMenuItem("Generate Stock Report");
         saveMenu.add(saveReport);
+        JMenuItem simulateDays = new JMenuItem("Run Simulation");
+        simulationMenu.add(simulateDays);
+        
+        
+        
+        
         add(pane,BorderLayout.CENTER);
         add(menuBar, BorderLayout.NORTH);
 
@@ -105,6 +117,26 @@ public class FrmTable extends JFrame{
 					JOptionPane.showMessageDialog(null, "Request cancelled");
 				}
         	}
+        });
+        
+        /** 
+         * Simulation action listener, this runs the javafx application (can only be run once per application launch)
+         * **/
+        
+        simulateDays.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {   
+            	
+            	Thread ui = new Thread(new Runnable(){
+                    @Override
+                    public void run(){
+                    SimulationGUI.launch(SimulationGUI.class);
+                    }
+              
+              });
+              
+              ui.start();
+            }
         });
 
         saveReport.addActionListener(new ActionListener(){

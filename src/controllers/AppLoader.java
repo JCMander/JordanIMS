@@ -20,13 +20,31 @@ public class AppLoader {
     private static ArrayList<Integer> productQuantity;
     private static ArrayList<Integer> productThreshold;
     private static ArrayList<Integer> productWeight;
+    private static ArrayList<Integer> productPrice;
     private static String stockListMessage = "";
     private static String[] options = new String[2];
     private static int viewReceipt;
     private static int[] maxStock;
-
+    
+    /** 
+     * Main class, this is used to run the application, from here FrmTable and Database Connection are called
+     * **/
     
 	public static void main(String[] args) {
+		
+
+		
+		/*smw = new SalesMetricsWriter();
+		
+		smw.setSalesMetricsValue(new SalesMetricsValue(1, 15, 14, "Item1", 2.00));
+		smw.setSalesMetricsValue(new SalesMetricsValue(2, 24, 23, "Item2", 1.00));
+		smw.setSalesMetricsValue(new SalesMetricsValue(3, 36, 1, "Item3", 5.00));
+		smw.setSalesMetricsValue(new SalesMetricsValue(4, 46, 34, "Item4", 7.00));
+		smw.setSalesMetricsValue(new SalesMetricsValue(5, 44, 24, "Item5", 9.99));
+
+		smw.writeReport();*/
+		
+		
 		
 		db = new DatabaseConnection();
 		frm = new FrmTable();
@@ -40,6 +58,8 @@ public class AppLoader {
 		setProductQuantity(db.getProductQuantity());
 		setProductName(db.getProductName());
 		setProductThreshold(db.getProductThreshold());
+		setProductPrice(db.getProductPrice());
+		
 		
 		setMaxStock(new int[getProductID().size()]);
 		for(int i =0; i<getProductID().size(); i++){
@@ -120,17 +140,6 @@ public class AppLoader {
 		return productQuantity.get(name1-1);
 	}
 
-
-	public static int[] getMaxStock() {
-		return maxStock;
-	}
-
-
-	public static void setMaxStock(int[] maxStock) {
-		AppLoader.maxStock = maxStock;
-	}
-
-
 	public static ArrayList<Integer> getProductID() {
 		return productID;
 	}
@@ -161,6 +170,14 @@ public class AppLoader {
 	}
 
 
+	public static ArrayList<Integer> getProductPrice() {
+		return productPrice;
+	}
+
+	public static void setProductPrice(ArrayList<Integer> productPrice) {
+		AppLoader.productPrice = productPrice;
+	}
+
 	public static ArrayList<Integer> getProductThreshold() {
 		return productThreshold;
 	}
@@ -178,6 +195,13 @@ public class AppLoader {
 
 	public static void setProductWeight(ArrayList<Integer> productWeight) {
 		AppLoader.productWeight = productWeight;
-	} 
-	
+	}
+
+	public static int[] getMaxStock() {
+		return maxStock;
+	}
+
+	public static void setMaxStock(int[] maxStock) {
+		AppLoader.maxStock = maxStock;
+	}
 }

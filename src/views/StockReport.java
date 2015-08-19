@@ -121,6 +121,7 @@ public class StockReport {
       throws BadElementException {	  
     PdfPTable table = new PdfPTable(5);
     Font font = new Font(FontFamily.HELVETICA, 12, Font.BOLD);
+    //Defines the font for a particular cell, which can then be used to convert a whole line red (if below quantity e.g.)
     Font lowQuantity = new Font(FontFamily.HELVETICA, 12, Font.NORMAL, BaseColor.RED);
     
     PdfPCell c1 = new PdfPCell(new Phrase("ID", font));
@@ -145,6 +146,7 @@ public class StockReport {
     table.addCell(c1);
     table.setHeaderRows(1);
     
+    //The if statement allows a red line to be shown for any quantity that is below its threshold
 	for(int i=0; i<productID.size(); i++){
 		if(productQuantity.get(i)<productThreshold.get(i)){
 			c1 = new PdfPCell(new Phrase(Integer.toString(productID.get(i)), lowQuantity));
