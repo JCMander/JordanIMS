@@ -21,7 +21,7 @@ public class SalesMetricsReader {
 	public SalesMetricsReader(){
 		ArrayList<String> salesMetricValues = new ArrayList<String>();
 		try {
-			for (String line : Files.readAllLines(Paths.get("../salesMetrics.txt"))) {
+			for (String line : Files.readAllLines(Paths.get("C://Users//jmander//workspace//BlueGardens//SalesMetrics//salesMetrics"))) {
 			    for (String part : line.split("\r\n")) {
 			        salesMetricValues.add(part);
 			    }

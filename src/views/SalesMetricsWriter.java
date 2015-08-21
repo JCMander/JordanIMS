@@ -14,7 +14,7 @@ import models.SalesMetricsValue;
 //Will hold the arraylist of salesmetric values
 public class SalesMetricsWriter {
     private static String report = "";
-    private static File reportFile = new File ("../salesMetrics");
+    private static File reportFile = new File ("C://Users//jmander//workspace//BlueGardens//SalesMetrics//salesMetrics");
     SalesMetricsValueManager salesMetricsValueManager;
 
 	//Define all of the variables that we'll need to print to the pdf

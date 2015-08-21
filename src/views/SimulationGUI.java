@@ -146,7 +146,7 @@ public class SimulationGUI extends Application {
 		//The bubble sort would then attach it to its respected product
 		for (int i=0; i<productID.size()-1; i++){
 			for (int j=0; j<productID.size()-1; j++){
-				if(quantityArray[j] > quantityArray[j+1]){
+				if(weightArray[j] < weightArray[j+1]){
 					
 					quantitySwap = quantityArray[j];
 					nameSwap = nameArray[j];
